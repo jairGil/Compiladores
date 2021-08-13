@@ -144,6 +144,21 @@ public class PrimerAL {
         else estado = diagrama();
     }
 
+    public static void cambio (int[] car, int[] est) {
+        c = lee_car();
+        boolean encontrado = false;
+        for (int i = 0; i < car.length; i++) {
+            if (c == car[i]){
+                estado = est[i];
+                encontrado = true;
+                break;
+            } 
+        }
+
+        if (!encontrado)
+            estado = diagrama();
+    }
+
     // Encuentra un token y cambiar de estado
     public static String token() {
         while (true) {
@@ -188,26 +203,19 @@ public class PrimerAL {
                     cambio(',', 17);
                     break;
                 case 18:
-                    cambio('A', 19);
-                    cambio('B', 23);
-                    cambio('C', 27);
-                    cambio('D', 31);
-                    cambio('I', 33);
+                    cambio(new int[]{'A', 'B', 'C', 'D', 'I'}, new int[]{19, 23, 27, 31, 33});
                     break;
                 case 19:
+                    cambio(new int[]{'X', 'H', 'L'}, new int[]{20, 21, 22});
                     cambio('X', 20);
                     cambio('H', 21);
                     cambio('L', 22);
                     break;
                 case 23:
-                    cambio('X', 24);
-                    cambio('H', 25);
-                    cambio('L', 26);
+                    cambio(new int[]{'X', 'H', 'L'}, new int[]{24, 25, 26});
                     break;
                 case 27:
-                    cambio('X', 28);
-                    cambio('H', 29);
-                    cambio('L', 30);
+                    cambio(new int[]{'X', 'H', 'L'}, new int[]{28, 29, 30});
                     break;
                 case 31:
                     cambio('I', 32);
