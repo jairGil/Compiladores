@@ -12,7 +12,7 @@ public class PrimerAL {
 
     public static int comienzo; // Auxiliar para cambios de diagramas
     public static int estado; // Auxiliar para verificacion de estados
-    
+
     public static int c; // Auxiliar para encontrar tokens
 
     // Imprime mensaje de error y sale del programa
@@ -25,14 +25,14 @@ public class PrimerAL {
     public static String pausa() {
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
         String nada = null;
-        
+
         try {
             nada = entrada.readLine();
-            return(nada);
-        } catch (Exception e){
+            return (nada);
+        } catch (Exception e) {
             System.err.println(e);
         }
-        return("");
+        return ("");
     }
 
     // Leer caracter a caracter de un arreglo
@@ -59,7 +59,7 @@ public class PrimerAL {
 
         try {
             FileReader fin = new FileReader(xFile);
-            filesize = (int)xFile.length();
+            filesize = (int) xFile.length();
             data = new char[filesize + 1];
             fin.read(data, 0, filesize);
             data[filesize] = ' ';
@@ -93,7 +93,7 @@ public class PrimerAL {
             return true;
         return false;
     }
-    
+
     public static boolean es_delim(int x) {
         if (x == 9 || x == 10 || x == 13 || x == 32)
             return true;
@@ -138,25 +138,25 @@ public class PrimerAL {
         return comienzo;
     }
 
-    public static void cambio (int car, int est) {
+    public static void cambio(int car, int est) {
         c = lee_car();
-        if (c == car) estado = est;
-        else estado = diagrama();
+        if (c == car)
+            estado = est;
+        else
+            estado = diagrama();
     }
 
-    public static void cambio (int[] car, int[] est) {
+    public static void cambio(int[] car, int[] est) {
         c = lee_car();
-        boolean encontrado = false;
+
         for (int i = 0; i < car.length; i++) {
-            if (c == car[i]){
+            if (c == car[i]) {
                 estado = est[i];
-                encontrado = true;
-                break;
-            } 
+                return;
+            }
         }
 
-        if (!encontrado)
-            estado = diagrama();
+        estado = diagrama();
     }
 
     // Encuentra un token y cambiar de estado
@@ -203,19 +203,19 @@ public class PrimerAL {
                     cambio(',', 17);
                     break;
                 case 18:
-                    cambio(new int[]{'A', 'B', 'C', 'D', 'I'}, new int[]{19, 23, 27, 31, 33});
+                    cambio(new int[] { 'A', 'B', 'C', 'D', 'I' }, new int[] { 19, 23, 27, 31, 33 });
                     break;
                 case 19:
-                    cambio(new int[]{'X', 'H', 'L'}, new int[]{20, 21, 22});
+                    cambio(new int[] { 'X', 'H', 'L' }, new int[] { 20, 21, 22 });
                     cambio('X', 20);
                     cambio('H', 21);
                     cambio('L', 22);
                     break;
                 case 23:
-                    cambio(new int[]{'X', 'H', 'L'}, new int[]{24, 25, 26});
+                    cambio(new int[] { 'X', 'H', 'L' }, new int[] { 24, 25, 26 });
                     break;
                 case 27:
-                    cambio(new int[]{'X', 'H', 'L'}, new int[]{28, 29, 30});
+                    cambio(new int[] { 'X', 'H', 'L' }, new int[] { 28, 29, 30 });
                     break;
                 case 31:
                     cambio('I', 32);
@@ -231,12 +231,9 @@ public class PrimerAL {
 
     public static void main(String args[]) {
         /*
-        linea = abreLeeCierra("algo.txt");
-        for (int i = 0; i <= 50000; i++) {
-            System.out.println("Posicion " + i + ": " + linea[i]);
-            pausa();
-        }
-        */
+         * linea = abreLeeCierra("algo.txt"); for (int i = 0; i <= 50000; i++) {
+         * System.out.println("Posicion " + i + ": " + linea[i]); pausa(); }
+         */
 
         System.out.println(es_let_hex('F'));
         System.out.println(es_num('A'));
