@@ -15,6 +15,9 @@ public class PrimerAL {
 
     public static int c; // Auxiliar para encontrar tokens
 
+    public static String LEXEMA;
+
+
     // Imprime mensaje de error y sale del programa
     public static void rut_error() {
         System.out.println("\n\nERROR: Caracter [" + Character.toString(c) + "], compilacion terminada!!");
@@ -146,6 +149,13 @@ public class PrimerAL {
             estado = diagrama();
     }
 
+    public static void cambio(boolean b, int est) {
+        if (b)
+            estado = est;
+        else
+            estado = diagrama();
+    }
+
     public static void cambio(int[] car, int[] est) {
         c = lee_car();
 
@@ -172,6 +182,10 @@ public class PrimerAL {
                 case 2:
                     cambio('V', 3);
                     break;
+                case 3:
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return("inst");
                 case 4:
                     cambio('A', 5);
                     break;
@@ -181,6 +195,10 @@ public class PrimerAL {
                 case 6:
                     cambio('D', 7);
                     break;
+                case 7:
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return("inst");
                 case 8:
                     cambio('J', 9);
                     break;
@@ -190,6 +208,10 @@ public class PrimerAL {
                 case 10:
                     cambio('P', 11);
                     break;
+                case 11:
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return("inst");
                 case 12:
                     cambio('N', 13);
                     break;
@@ -199,9 +221,17 @@ public class PrimerAL {
                 case 14:
                     cambio('P', 15);
                     break;
+                case 15:
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return("inst");
                 case 16:
                     cambio(',', 17);
                     break;
+                case 17:
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return("sep");
                 case 18:
                     cambio(new int[] { 'A', 'B', 'C', 'D', 'I' }, new int[] { 19, 23, 27, 31, 33 });
                     break;
@@ -211,20 +241,130 @@ public class PrimerAL {
                     cambio('H', 21);
                     cambio('L', 22);
                     break;
+                case 20:
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return("reg");
+                case 21:
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return("reg");
+                case 22:
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return("reg");
                 case 23:
                     cambio(new int[] { 'X', 'H', 'L' }, new int[] { 24, 25, 26 });
                     break;
+                case 24:
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return("reg");
+                case 25:
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return("reg");
+                case 26:
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return("reg");
                 case 27:
                     cambio(new int[] { 'X', 'H', 'L' }, new int[] { 28, 29, 30 });
                     break;
+                case 28:
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return("reg");
+                case 29:
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return("reg");
+                case 30:
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return("reg");
                 case 31:
                     cambio('I', 32);
                     break;
+                case 32:
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return("reg");
                 case 33:
                     cambio('P', 34);
                     break;
+                case 34:
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return("reg");
                 case 35:
+                    c = lee_car();
+                    cambio(es_let_hex(c) || es_num(c), 36);
                     break;
+                case 36:
+                    c = lee_car();
+                    if (es_let_hex(c) || es_num(c))
+                        estado = 36;
+                    else if (c == 'h')
+                        estado = 37;
+                    else 
+                        estado = diagrama();
+                    break;
+                case 37:
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return("numhex");
+                case 38:
+                    cambio(':', 39);
+                    break;
+                case 39:
+                    c = lee_car();
+                    cambio(es_letra(c), 40);
+                case 40:
+                    c = lee_car();
+                    if (es_letra(c) || es_num(c))
+                        estado = 40;
+                    else 
+                        estado = 41;
+                    break;
+                case 41:
+                    a_a--;
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return("ll_etq");
+                case 42:
+                    cambio('(', 43);
+                    break;
+                case 43:
+                    c = lee_car();
+                    cambio(es_letra(c), 44);
+                case 44:
+                    c = lee_car();
+                    if (es_letra(c) || es_num(c))
+                        estado = 44;
+                    else
+                        cambio(')', 45);
+                    break;
+                case 45:
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return("etq_dest");
+                case 46:
+                    c = lee_car();
+                    cambio(es_delim(c), 47);
+                    break;
+                case 47:
+                    c = lee_car();
+                    if (es_delim(c))
+                        estado = 47;
+                    else 
+                        estado = 48;
+                    break;
+                case 48:
+                    a_a--;
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return("nosirve");
             }
         }
     }
