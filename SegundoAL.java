@@ -1,4 +1,6 @@
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class SegundoAL {
 
@@ -18,6 +20,9 @@ public class SegundoAL {
     public static String LEXEMA;
     public static String MiToken;
     public static String entrada;
+
+    public static ArrayList<String> instrucciones = new ArrayList<>(
+            Arrays.asList(new String[] { "MOV", "ADD", "JMP", "NOP" }));;
 
     // Imprime mensaje de error y sale del programa
     public static void rut_error() {
@@ -254,7 +259,7 @@ public class SegundoAL {
                     a_a--;
                     LEXEMA = obten_lexema();
                     a_i = a_a;
-                    return ("string");
+                    return instrucciones.contains(LEXEMA) ? "inst" : "String indefinida";
                 case 14:
                     c = lee_car();
                     cambio(es_let_hex(c) || es_num(c), 15);
