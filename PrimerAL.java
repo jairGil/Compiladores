@@ -330,6 +330,7 @@ public class PrimerAL {
                 case 39:
                     c = lee_car();
                     cambio(es_letra(c), 40);
+                    break;
                 case 40:
                     c = lee_car();
                     if (es_letra(c) || es_num(c))
