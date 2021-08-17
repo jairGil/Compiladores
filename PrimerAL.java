@@ -16,6 +16,8 @@ public class PrimerAL {
     public static int c; // Auxiliar para encontrar tokens
 
     public static String LEXEMA;
+    public static String MiToken;
+    public static String entrada;
 
 
     // Imprime mensaje de error y sale del programa
@@ -66,7 +68,7 @@ public class PrimerAL {
             data = new char[filesize + 1];
             fin.read(data, 0, filesize);
             data[filesize] = ' ';
-            filesize += 1;
+            filesize ++;
             fin.close();
             return data;
         } catch (FileNotFoundException exc) {
@@ -126,15 +128,15 @@ public class PrimerAL {
                 comienzo = 35;
                 break;
             case 35:
-                comienzo = 37;
+                comienzo = 38;
                 break;
-            case 37:
-                comienzo = 41;
+            case 38:
+                comienzo = 42;
                 break;
-            case 41:
-                comienzo = 45;
+            case 46:
+                comienzo = 49;
                 break;
-            case 45:
+            case 49:
                 rut_error();
                 break;
         }
@@ -237,9 +239,6 @@ public class PrimerAL {
                     break;
                 case 19:
                     cambio(new int[] { 'X', 'H', 'L' }, new int[] { 20, 21, 22 });
-                    cambio('X', 20);
-                    cambio('H', 21);
-                    cambio('L', 22);
                     break;
                 case 20:
                     LEXEMA = obten_lexema();
@@ -338,6 +337,7 @@ public class PrimerAL {
                 case 43:
                     c = lee_car();
                     cambio(es_letra(c), 44);
+                    break;
                 case 44:
                     c = lee_car();
                     if (es_letra(c) || es_num(c))
@@ -365,17 +365,52 @@ public class PrimerAL {
                     LEXEMA = obten_lexema();
                     a_i = a_a;
                     return("nosirve");
+                case 49:
+                    cambio(255, 50);
+                    break;
+                case 50:
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return("nosirve");
             }
         }
+    }
+
+    public static File xArchivo(String s) {
+        File xFile = new File(s);
+        return xFile;
     }
 
     public static void main(String args[]) {
         /*
          * linea = abreLeeCierra("algo.txt"); for (int i = 0; i <= 50000; i++) {
          * System.out.println("Posicion " + i + ": " + linea[i]); pausa(); }
-         */
+        
 
         System.out.println(es_let_hex('F'));
         System.out.println(es_num('A'));
+        */
+
+        try {
+            entrada = args[0] + ".asm";
+        } catch (Exception e) {
+            System.out.println("Error en el archivo de entrada");
+            System.exit(4);
+        }
+
+        if (!xArchivo(entrada).exists()) {
+            System.out.println("El archivo [" + entrada + "] no existe...");
+            System.exit(4);
+        }
+
+        linea = abreLeeCierra(entrada);
+
+        while(!fin_archivo){
+            estado = 0;
+            comienzo = 0;
+            MiToken = token();
+            System.out.println("Encontre el token [" + MiToken + "] con lexema [" + LEXEMA + "]");
+           // pausa();
+        }
     }
 }
