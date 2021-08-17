@@ -167,7 +167,7 @@ public class PrimerAL {
         for (int i = 0; i < car.length; i++) {
             if (c == car[i]) {
                 estado = est[i];
-                break;
+                return;
             }
         }
 
