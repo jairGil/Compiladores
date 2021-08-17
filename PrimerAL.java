@@ -177,6 +177,7 @@ public class PrimerAL {
     public static String token() {
         int camino = -1;
         while (true) {
+            // Print path
             if (camino != estado) {
                 camino = estado;
                 System.out.println(camino);
