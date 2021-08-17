@@ -177,7 +177,8 @@ public class PrimerAL {
     // Encuentra un token y cambiar de estado
     public static String token() {
         while (true) {
-            switch (comienzo) {
+            System.out.println(estado);
+            switch (estado) {
                 case 0:
                     cambio('M', 1);
                     break;
