@@ -278,6 +278,7 @@ public class SegundoAL {
                 case 18:
                     c = lee_car();
                     cambio(es_letra(c), 19);
+                    break;
                 case 19:
                     c = lee_car();
                     if (es_letra(c) || es_num(c))
