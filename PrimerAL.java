@@ -19,7 +19,6 @@ public class PrimerAL {
     public static String MiToken;
     public static String entrada;
 
-
     // Imprime mensaje de error y sale del programa
     public static void rut_error() {
         System.out.println("\n\nERROR: Caracter [" + Character.toString(c) + "], compilacion terminada!!");
@@ -68,7 +67,7 @@ public class PrimerAL {
             data = new char[filesize + 1];
             fin.read(data, 0, filesize);
             data[filesize] = ' ';
-            filesize ++;
+            filesize++;
             fin.close();
             return data;
         } catch (FileNotFoundException exc) {
@@ -176,8 +175,16 @@ public class PrimerAL {
 
     // Encuentra un token y cambiar de estado
     public static String token() {
+        int camino = -1;
         while (true) {
-            System.out.println(estado);
+            // Print path
+            if (camino != estado) {
+                camino = estado;
+                System.out.println(camino);
+
+            } else {
+                camino = estado;
+            }
             switch (estado) {
                 case 0:
                     cambio('M', 1);
@@ -191,7 +198,7 @@ public class PrimerAL {
                 case 3:
                     LEXEMA = obten_lexema();
                     a_i = a_a;
-                    return("inst");
+                    return ("inst");
                 case 4:
                     cambio('A', 5);
                     break;
@@ -204,7 +211,7 @@ public class PrimerAL {
                 case 7:
                     LEXEMA = obten_lexema();
                     a_i = a_a;
-                    return("inst");
+                    return ("inst");
                 case 8:
                     cambio('J', 9);
                     break;
@@ -217,7 +224,7 @@ public class PrimerAL {
                 case 11:
                     LEXEMA = obten_lexema();
                     a_i = a_a;
-                    return("inst");
+                    return ("inst");
                 case 12:
                     cambio('N', 13);
                     break;
@@ -230,14 +237,14 @@ public class PrimerAL {
                 case 15:
                     LEXEMA = obten_lexema();
                     a_i = a_a;
-                    return("inst");
+                    return ("inst");
                 case 16:
                     cambio(',', 17);
                     break;
                 case 17:
                     LEXEMA = obten_lexema();
                     a_i = a_a;
-                    return("sep");
+                    return ("sep");
                 case 18:
                     cambio(new int[] { 'A', 'B', 'C', 'D', 'I' }, new int[] { 19, 23, 27, 31, 33 });
                     break;
@@ -247,59 +254,59 @@ public class PrimerAL {
                 case 20:
                     LEXEMA = obten_lexema();
                     a_i = a_a;
-                    return("reg");
+                    return ("reg");
                 case 21:
                     LEXEMA = obten_lexema();
                     a_i = a_a;
-                    return("reg");
+                    return ("reg");
                 case 22:
                     LEXEMA = obten_lexema();
                     a_i = a_a;
-                    return("reg");
+                    return ("reg");
                 case 23:
                     cambio(new int[] { 'X', 'H', 'L' }, new int[] { 24, 25, 26 });
                     break;
                 case 24:
                     LEXEMA = obten_lexema();
                     a_i = a_a;
-                    return("reg");
+                    return ("reg");
                 case 25:
                     LEXEMA = obten_lexema();
                     a_i = a_a;
-                    return("reg");
+                    return ("reg");
                 case 26:
                     LEXEMA = obten_lexema();
                     a_i = a_a;
-                    return("reg");
+                    return ("reg");
                 case 27:
                     cambio(new int[] { 'X', 'H', 'L' }, new int[] { 28, 29, 30 });
                     break;
                 case 28:
                     LEXEMA = obten_lexema();
                     a_i = a_a;
-                    return("reg");
+                    return ("reg");
                 case 29:
                     LEXEMA = obten_lexema();
                     a_i = a_a;
-                    return("reg");
+                    return ("reg");
                 case 30:
                     LEXEMA = obten_lexema();
                     a_i = a_a;
-                    return("reg");
+                    return ("reg");
                 case 31:
                     cambio('I', 32);
                     break;
                 case 32:
                     LEXEMA = obten_lexema();
                     a_i = a_a;
-                    return("reg");
+                    return ("reg");
                 case 33:
                     cambio('P', 34);
                     break;
                 case 34:
                     LEXEMA = obten_lexema();
                     a_i = a_a;
-                    return("reg");
+                    return ("reg");
                 case 35:
                     c = lee_car();
                     cambio(es_let_hex(c) || es_num(c), 36);
@@ -310,13 +317,13 @@ public class PrimerAL {
                         estado = 36;
                     else if (c == 'h')
                         estado = 37;
-                    else 
+                    else
                         estado = diagrama();
                     break;
                 case 37:
                     LEXEMA = obten_lexema();
                     a_i = a_a;
-                    return("numhex");
+                    return ("numhex");
                 case 38:
                     cambio(':', 39);
                     break;
@@ -327,14 +334,14 @@ public class PrimerAL {
                     c = lee_car();
                     if (es_letra(c) || es_num(c))
                         estado = 40;
-                    else 
+                    else
                         estado = 41;
                     break;
                 case 41:
                     a_a--;
                     LEXEMA = obten_lexema();
                     a_i = a_a;
-                    return("ll_etq");
+                    return ("ll_etq");
                 case 42:
                     cambio('(', 43);
                     break;
@@ -346,13 +353,13 @@ public class PrimerAL {
                     c = lee_car();
                     if (es_letra(c) || es_num(c))
                         estado = 44;
-                    else
-                        cambio(')', 45);
+                    else if (c == ')')
+                        cambio(true, 45);
                     break;
                 case 45:
                     LEXEMA = obten_lexema();
                     a_i = a_a;
-                    return("etq_dest");
+                    return ("etq_dest");
                 case 46:
                     c = lee_car();
                     cambio(es_delim(c), 47);
@@ -361,21 +368,21 @@ public class PrimerAL {
                     c = lee_car();
                     if (es_delim(c))
                         estado = 47;
-                    else 
+                    else
                         estado = 48;
                     break;
                 case 48:
                     a_a--;
                     LEXEMA = obten_lexema();
                     a_i = a_a;
-                    return("nosirve");
+                    return ("nosirve");
                 case 49:
                     cambio(255, 50);
                     break;
                 case 50:
                     LEXEMA = obten_lexema();
                     a_i = a_a;
-                    return("nosirve");
+                    return ("nosirve");
             }
         }
     }
@@ -389,11 +396,10 @@ public class PrimerAL {
         /*
          * linea = abreLeeCierra("algo.txt"); for (int i = 0; i <= 50000; i++) {
          * System.out.println("Posicion " + i + ": " + linea[i]); pausa(); }
-        
-
-        System.out.println(es_let_hex('F'));
-        System.out.println(es_num('A'));
-        */
+         * 
+         * 
+         * System.out.println(es_let_hex('F')); System.out.println(es_num('A'));
+         */
 
         try {
             entrada = args[0] + ".asm";
@@ -409,7 +415,7 @@ public class PrimerAL {
 
         linea = abreLeeCierra(entrada);
 
-        while(!fin_archivo){
+        while (!fin_archivo) {
             estado = 0;
             comienzo = 0;
             MiToken = token();
