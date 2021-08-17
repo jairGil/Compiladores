@@ -133,6 +133,9 @@ public class PrimerAL {
             case 38:
                 comienzo = 42;
                 break;
+            case 42:
+                comienzo = 46;
+                break;
             case 46:
                 comienzo = 49;
                 break;
@@ -164,7 +167,7 @@ public class PrimerAL {
         for (int i = 0; i < car.length; i++) {
             if (c == car[i]) {
                 estado = est[i];
-                return;
+                break;
             }
         }
 
@@ -410,7 +413,7 @@ public class PrimerAL {
             comienzo = 0;
             MiToken = token();
             System.out.println("Encontre el token [" + MiToken + "] con lexema [" + LEXEMA + "]");
-           // pausa();
+            pausa();
         }
     }
 }
