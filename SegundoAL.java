@@ -21,12 +21,14 @@ public class SegundoAL {
     public static String MiToken;
     public static String entrada;
 
+    public static int contLinea = 1;
+
     public static ArrayList<String> instrucciones = new ArrayList<>(
             Arrays.asList(new String[] { "MOV", "ADD", "JMP", "NOP" }));;
 
     // Imprime mensaje de error y sale del programa
     public static void rut_error() {
-        System.out.println("\n\nERROR: Caracter [" + Character.toString(c) + "], compilacion terminada!!");
+        System.out.println("\n\nERROR: Linea [" + contLinea + "] Caracter [" + Character.toString(c) + "], compilacion terminada!!");
         System.exit(4);
     }
 
@@ -47,6 +49,8 @@ public class SegundoAL {
     // Leer caracter a caracter de un arreglo
     public static char lee_car() {
         if (a_a < filesize) {
+            if (linea[a_a] == 10)
+                contLinea++;
             return linea[a_a++];
         } else {
             fin_archivo = true;
