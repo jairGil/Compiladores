@@ -257,11 +257,13 @@ public class SegundoAL {
                 case 13:
                     a_a--;
                     LEXEMA = obten_lexema();
-                    a_i = a_a;
-                    if (!instrucciones.contains(LEXEMA)) 
-                        estado = diagrama();
-                    else 
+                    if (instrucciones.contains(LEXEMA)) {
+                        a_i = a_a;
                         return ("inst");
+                    }
+                    else 
+                        rut_error();
+                        break;
                 case 14:
                     c = lee_car();
                     cambio(es_let_hex(c) || es_num(c), 15);
