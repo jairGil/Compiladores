@@ -60,7 +60,7 @@ public class SegundoAL {
 
     public static String obten_lexema() {
         String xx = "";
-        for (int i = a_i; i <= a_a - 1; i++)
+        for (int i = a_i; i < a_a; i++)
             xx = xx + linea[i];
         return xx;
     }
@@ -142,13 +142,8 @@ public class SegundoAL {
                 comienzo = 25;
                 break;
             case 25:
-                comienzo = 28;
-                break;
-            case 28:
-                comienzo = 30;
-                break;
-            case 30:
                 rut_error();
+                comienzo = 28;
                 break;
         }
         return comienzo;
@@ -197,9 +192,9 @@ public class SegundoAL {
 
     // Encuentra un token y cambiar de estado
     public static String token() {
-        int camino = -1;
+        //int camino = -1;
         while (true) {
-            // Print path
+            /*// Print path 
             if (camino != estado) {
                 camino = estado;
                 System.out.println(camino);
@@ -207,7 +202,7 @@ public class SegundoAL {
             } else {
                 camino = estado;
             }
-
+            */
             switch (estado) {
                 case 0:
                     cambio(',', 1);
@@ -263,7 +258,10 @@ public class SegundoAL {
                     a_a--;
                     LEXEMA = obten_lexema();
                     a_i = a_a;
-                    return instrucciones.contains(LEXEMA) ? "inst" : "String indefinida";
+                    if (!instrucciones.contains(LEXEMA)) 
+                        estado = diagrama();
+                    else 
+                        return ("inst");
                 case 14:
                     c = lee_car();
                     cambio(es_let_hex(c) || es_num(c), 15);
@@ -334,13 +332,6 @@ public class SegundoAL {
                     LEXEMA = obten_lexema();
                     a_i = a_a;
                     return ("nosirve");
-                case 28:
-                    cambio(255, 29);
-                    break;
-                case 29:
-                    LEXEMA = obten_lexema();
-                    a_i = a_a;
-                    return ("nosirve");
             }
         }
     }
@@ -378,8 +369,7 @@ public class SegundoAL {
             comienzo = 0;
             MiToken = token();
 
-            System.out.println("Encontre el token [" + MiToken + "] con lexema [" + LEXEMA + "]");
-            pausa();
+            System.out.println("Token [" + MiToken + "] Lexema [" + LEXEMA + "] Linea [" + contLinea + "]");
         }
     }
 }
