@@ -1,8 +1,6 @@
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
 
-public class SegundoAL {
+public class ALLenguajeA {
 
     // VARIABLES DEL PROGRAMA
     public static int filesize = 0; // Tamaño del archivo
@@ -22,9 +20,6 @@ public class SegundoAL {
     public static String entrada;
 
     public static int contLinea = 1;
-
-    public static ArrayList<String> instrucciones = new ArrayList<>(
-            Arrays.asList(new String[] { "MOV", "ADD", "JMP", "NOP" }));;
 
     // Imprime mensaje de error y sale del programa
     public static void rut_error() {
@@ -46,6 +41,25 @@ public class SegundoAL {
         return ("");
     }
 
+    public static boolean es_delim(int x) {
+        if (x == 9 || x == 10 || x == 13 || x == 32)
+            return true;
+        return false;
+    }
+
+    // Validar un numero
+    public static boolean es_digito(int x) {
+        if (x >= 48 && x <= 57)
+            return true;
+        return false;
+    }
+
+    public static boolean es_letra(int x) {
+        if (x >= 65 && x <= 90 || x >= 97 && x <= 122)
+            return true;
+        return false;
+    }
+
     // Leer caracter a caracter de un arreglo
     public static char lee_car() {
         if (a_a < filesize) {
@@ -56,13 +70,6 @@ public class SegundoAL {
             fin_archivo = true;
             return 255;
         }
-    }
-
-    public static String obten_lexema() {
-        String xx = "";
-        for (int i = a_i; i < a_a; i++)
-            xx = xx + linea[i];
-        return xx;
     }
 
     // Abrir una archivo de datos
@@ -81,42 +88,10 @@ public class SegundoAL {
             return data;
         } catch (FileNotFoundException exc) {
 
-        } catch (IOException exc) {
+        } catch (InvalidPathException exc) {
 
         }
         return null;
-    }
-
-    // Validar una letra hexadecimal
-    public static boolean es_let_hex(int x) {
-        if (x >= 60 && x <= 70)
-            return true;
-        return false;
-    }
-
-    // Validar un numero
-    public static boolean es_num(int x) {
-        if (x >= 48 && x <= 57)
-            return true;
-        return false;
-    }
-
-    public static boolean es_letra(int x) {
-        if (x >= 65 && x <= 90 || x >= 97 && x <= 122)
-            return true;
-        return false;
-    }
-
-    public static boolean es_letra_mayuscula(int x) {
-        if (x >= 65 && x <= 90)
-            return true;
-        return false;
-    }
-
-    public static boolean es_delim(int x) {
-        if (x == 9 || x == 10 || x == 13 || x == 32)
-            return true;
-        return false;
     }
 
     // Genera los cambios de diagrama
@@ -124,26 +99,22 @@ public class SegundoAL {
         a_a = a_i;
         switch (comienzo) {
             case 0:
-                comienzo = 2;
+                comienzo = 4;
                 break;
-            case 2:
-                comienzo = 11;
+            case 4:
+                comienzo = 13;
                 break;
-            case 11:
-                comienzo = 14;
+            case 13:
+                comienzo = 18;
                 break;
-            case 14:
-                comienzo = 17;
+            case 18:
+                comienzo = 20;
                 break;
-            case 17:
-                comienzo = 21;
+            case 20:
+                comienzo = 23;
                 break;
-            case 21:
-                comienzo = 25;
-                break;
-            case 25:
+            case 23:
                 rut_error();
-                comienzo = 28;
                 break;
         }
         return comienzo;
@@ -205,29 +176,46 @@ public class SegundoAL {
             */
             switch (estado) {
                 case 0:
-                    cambio(',', 1);
+                    c = lee_car();
+                    cambio(es_letra(c), 1);
                     break;
                 case 1:
-                    LEXEMA = obten_lexema();
-                    a_i = a_a;
-                    return ("sep");
+                    c = lee_car();
+                    if (es_letra(c) || es_digito(c))
+                        estado = 1;
+                    else if (c == '_')
+                        estado = 2;
+                    else 
+                        estado = 3;
+                    break;
                 case 2:
-                    cambio(new int[] { 'A', 'B', 'C', 'D', 'I' }, new int[] { 3, 3, 3, 7, 9 });
+                    c = lee_car();
+                    cambio(es_letra(c) || es_digito(c), 1);
                     break;
                 case 3:
-                    cambio(new int[] { 'X', 'H', 'L' }, new int[] { 4, 5, 6 });
+                    a_a--;
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return ("id");
                     break;
                 case 4:
-                    LEXEMA = obten_lexema();
-                    a_i = a_a;
-                    return ("reg");
+                    c = lee_car();
+                    cambio(es_digito(c), 5);
+                    break;
                 case 5:
-                    LEXEMA = obten_lexema();
-                    a_i = a_a;
-                    return ("reg");
+                    c = lee_car();
+                    if (es_digito(c))
+                        estado = 5;
+                    else if (c == 'e' || c == 'E')
+                        estado = 9;
+                    else if (c == '.')
+                        estado = 6;
+                    else
+                        estado = 8;
+                    break;
                 case 6:
-                    LEXEMA = obten_lexema();
-                    a_i = a_a;
+                    c = lee_car();
+                    cambio(es_digito(c), 7);
                     return ("reg");
                 case 7:
                     cambio('I', 8);
@@ -266,11 +254,11 @@ public class SegundoAL {
                     break;
                 case 14:
                     c = lee_car();
-                    cambio(es_let_hex(c) || es_num(c), 15);
+                    cambio(es_let_hex(c) || es_digito(c), 15);
                     break;
                 case 15:
                     c = lee_car();
-                    if (es_let_hex(c) || es_num(c))
+                    if (es_let_hex(c) || es_digito(c))
                         estado = 15;
                     else if (c == 'h')
                         estado = 16;
@@ -290,7 +278,7 @@ public class SegundoAL {
                     break;
                 case 19:
                     c = lee_car();
-                    if (es_letra(c) || es_num(c))
+                    if (es_letra(c) || es_digito(c))
                         estado = 19;
                     else
                         estado = 20;
@@ -309,7 +297,7 @@ public class SegundoAL {
                     break;
                 case 23:
                     c = lee_car();
-                    if (es_letra(c) || es_num(c))
+                    if (es_letra(c) || es_digito(c))
                         estado = 23;
                     else if (c == ')')
                         cambio(true, 24);
@@ -337,10 +325,28 @@ public class SegundoAL {
             }
         }
     }
+    
+    public static String obten_lexema() {
+        String xx = "";
+        for (int i = a_i; i < a_a; i++)
+            xx = xx + linea[i];
+        return xx;
+    }
 
     public static File xArchivo(String s) {
         File xFile = new File(s);
         return xFile;
+    }
+
+    public static boolean creaEscribeArchivo(File xFile, String mensaje) {
+        try {
+            PrintWriter fileOut = new PrintWriter(xFile);
+            fileOut.println(mensaje);
+            fileOut.close();
+            return true;
+        } catch (IOException ex) {
+            return false;
+        }
     }
 
     public static void main(String args[]) {
