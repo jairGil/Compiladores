@@ -65,8 +65,11 @@ public class ALLenguajeA {
     // Leer caracter a caracter de un arreglo
     public static char lee_car() {
         if (a_a < filesize) {
-            if (linea[a_a] == '\n')
+            if (linea[a_a] == '\n') {
                 contLinea++;
+                System.out.println((int) linea[a_a]);
+
+            }
             return linea[a_a++];
         } else {
             fin_archivo = true;
@@ -93,32 +96,6 @@ public class ALLenguajeA {
         } catch (IOException exc) {
         }
         return null;
-    }
-
-    // Genera los cambios de diagrama
-    public static int diagrama() {
-        a_a = a_i;
-        switch (comienzo) {
-            case 0:
-                comienzo = 4;
-                break;
-            case 4:
-                comienzo = 13;
-                break;
-            case 13:
-                comienzo = 18;
-                break;
-            case 18:
-                comienzo = 20;
-                break;
-            case 20:
-                comienzo = 23;
-                break;
-            case 23:
-                rut_error();
-                break;
-        }
-        return comienzo;
     }
 
     public static void cambio(int car, int est) {
@@ -160,6 +137,32 @@ public class ALLenguajeA {
         }
 
         estado = diagrama();
+    }
+
+    // Genera los cambios de diagrama
+    public static int diagrama() {
+        a_a = a_i;
+        switch (comienzo) {
+            case 0:
+                comienzo = 4;
+                break;
+            case 4:
+                comienzo = 13;
+                break;
+            case 13:
+                comienzo = 18;
+                break;
+            case 18:
+                comienzo = 20;
+                break;
+            case 20:
+                comienzo = 23;
+                break;
+            case 23:
+                rut_error();
+                break;
+        }
+        return comienzo;
     }
 
     // Encuentra un token y cambiar de estado
