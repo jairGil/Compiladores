@@ -1,4 +1,5 @@
 import java.io.*;
+import java.nio.file.InvalidPathException;
 
 public class ALLenguajeA {
 
@@ -87,9 +88,8 @@ public class ALLenguajeA {
             fin.close();
             return data;
         } catch (FileNotFoundException exc) {
-
         } catch (InvalidPathException exc) {
-
+        } catch (IOException exc) {
         }
         return null;
     }
@@ -197,7 +197,6 @@ public class ALLenguajeA {
                     LEXEMA = obten_lexema();
                     a_i = a_a;
                     return ("id");
-                    break;
                 case 4:
                     c = lee_car();
                     cambio(es_digito(c), 5);
@@ -216,112 +215,99 @@ public class ALLenguajeA {
                 case 6:
                     c = lee_car();
                     cambio(es_digito(c), 7);
-                    return ("reg");
+                    break;
                 case 7:
-                    cambio('I', 8);
+                    c = lee_car();
+                    if (es_digito(c))
+                        estado = 7;
+                    else if (c == 'e' || c == 'E')
+                        estado = 9;
+                    else 
+                        estado = 8;
                     break;
                 case 8:
-                    LEXEMA = obten_lexema();
-                    a_i = a_a;
-                    return ("reg");
-                case 9:
-                    cambio('P', 10);
-                    break;
-                case 10:
-                    LEXEMA = obten_lexema();
-                    a_i = a_a;
-                    return ("reg");
-                case 11:
-                    c = lee_car();
-                    cambio(es_letra_mayuscula(c), 12);
-                    break;
-                case 12:
-                    c = lee_car();
-                    if (es_letra_mayuscula(c))
-                        estado = 12;
-                    else
-                        estado = 13;
-                    break;
-                case 13:
                     a_a--;
                     LEXEMA = obten_lexema();
-                    if (instrucciones.contains(LEXEMA)) {
-                        a_i = a_a;
-                        return ("inst");
-                    }
-                    else 
-                        rut_error();
-                    break;
-                case 14:
+                    a_i = a_a;
+                    return ("num");
+                case 9:
                     c = lee_car();
-                    cambio(es_let_hex(c) || es_digito(c), 15);
-                    break;
-                case 15:
-                    c = lee_car();
-                    if (es_let_hex(c) || es_digito(c))
-                        estado = 15;
-                    else if (c == 'h')
-                        estado = 16;
+                    if (c == '+' || c == '-')
+                        estado = 10;
+                    else if (es_digito(c))
+                        estado = 11;
                     else
                         estado = diagrama();
                     break;
+                case 10:
+                    c = lee_car();
+                    cambio(es_digito(c), 11);
+                    break;
+                case 11:
+                    c = lee_car();
+                    if (es_digito(c))
+                        estado = 11;
+                    else 
+                        estado = 12;
+                    break;
+                case 12:
+                    a_a--;
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return ("num");
+                case 13:
+                    cambio(new int[] {'+', '-', '*', '/'}, new int[] {14, 15, 16, 17});
+                    break;
+                case 14:
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return ("+");
+                case 15:
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return ("-");
                 case 16:
                     LEXEMA = obten_lexema();
                     a_i = a_a;
-                    return ("numhex");
+                    return ("*");
                 case 17:
-                    cambio(':', 18);
-                    break;
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return ("/");
                 case 18:
                     c = lee_car();
-                    cambio(es_letra(c), 19);
+                    cambio(255, 19);
                     break;
                 case 19:
-                    c = lee_car();
-                    if (es_letra(c) || es_digito(c))
-                        estado = 19;
-                    else
-                        estado = 20;
-                    break;
-                case 20:
-                    a_a--;
                     LEXEMA = obten_lexema();
                     a_i = a_a;
-                    return ("ll_etq");
+                    return ("eof");
+                case 20:
+                    cambio(new int[] {'(', ')'}, new int[] {21, 22});
+                    break;
                 case 21:
-                    cambio('(', 22);
-                    break;
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return ("(");
                 case 22:
-                    c = lee_car();
-                    cambio(es_letra(c), 23);
-                    break;
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return (")");
                 case 23:
                     c = lee_car();
-                    if (es_letra(c) || es_digito(c))
-                        estado = 23;
-                    else if (c == ')')
-                        cambio(true, 24);
+                    cambio(es_delim(c), 24)                    ;
                     break;
                 case 24:
-                    LEXEMA = obten_lexema();
-                    a_i = a_a;
-                    return ("etq_dest");
-                case 25:
-                    c = lee_car();
-                    cambio(es_delim(c), 26);
-                    break;
-                case 26:
                     c = lee_car();
                     if (es_delim(c))
-                        estado = 26;
+                        estado = 24;
                     else
-                        estado = 27;
-                    break;
-                case 27:
+                        estado = 25;
+                case 25:
                     a_a--;
                     LEXEMA = obten_lexema();
                     a_i = a_a;
-                    return ("nosirve");
+                    return ("basura");
             }
         }
     }
@@ -350,16 +336,9 @@ public class ALLenguajeA {
     }
 
     public static void main(String args[]) {
-        /*
-         * linea = abreLeeCierra("algo.txt"); for (int i = 0; i <= 50000; i++) {
-         * System.out.println("Posicion " + i + ": " + linea[i]); pausa(); }
-         * 
-         * 
-         * System.out.println(es_let_hex('F')); System.out.println(es_num('A'));
-         */
 
         try {
-            entrada = args[0] + ".asm";
+            entrada = args[0] + ".LA";
         } catch (Exception e) {
             System.out.println("Error en el archivo de entrada");
             System.exit(4);
