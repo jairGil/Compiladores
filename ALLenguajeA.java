@@ -172,140 +172,196 @@ public class ALLenguajeA {
              * 
              * } else { camino = estado; }
              */
+
+            if (estado == 0) {
+                c = lee_car();
+                cambio(es_letra(c), 1);
+            } else if (estado == 1) {
+                c = lee_car();
+                if (es_letra(c) || es_digito(c))
+                    estado = 1;
+                else if (c == '_')
+                    estado = 2;
+                else
+                    estado = 3;
+            } else if (estado == 2) {
+                c = lee_car();
+                cambio(es_letra(c) || es_digito(c), 1);
+            } else if (estado == 3) {
+                a_a--;
+                LEXEMA = obten_lexema();
+                a_i = a_a;
+                return ("id");
+            } else if (estado == 4) {
+                c = lee_car();
+                cambio(es_digito(c), 5);
+            } else if (estado == 5) {
+                c = lee_car();
+                if (es_digito(c))
+                    estado = 5;
+                else if (c == 'e' || c == 'E')
+                    estado = 9;
+                else if (c == '.')
+                    estado = 6;
+                else
+                    estado = 8;
+            } else if (estado == 6) {
+                c = lee_car();
+                cambio(es_digito(c), 7);
+            } else if (estado == 7) {
+                c = lee_car();
+                if (es_digito(c))
+                    estado = 7;
+                else if (c == 'e' || c == 'E')
+                    estado = 9;
+                else
+                    estado = 8;
+            } else if (estado == 8) {
+                a_a--;
+                LEXEMA = obten_lexema();
+                a_i = a_a;
+                return ("num");
+            } else if (estado == 9) {
+                c = lee_car();
+                if (c == '+' || c == '-')
+                    estado = 10;
+                else if (es_digito(c))
+                    estado = 11;
+                else
+                    estado = diagrama();
+            } else if (estado == 10) {
+                c = lee_car();
+                cambio(es_digito(c), 11);
+            } else if (estado == 11) {
+                c = lee_car();
+                if (es_digito(c))
+                    estado = 11;
+                else
+                    estado = 12;
+            } else if (estado == 12) {
+                a_a--;
+                LEXEMA = obten_lexema();
+                a_i = a_a;
+                return ("num");
+            } else if (estado == 13) {
+                cambio(new int[] { '+', '-', '*', '/' }, new int[] { 14, 15, 16, 17 });
+            } else if (estado == 14) {
+                LEXEMA = obten_lexema();
+                a_i = a_a;
+                return ("+");
+            } else if (estado == 15) {
+                LEXEMA = obten_lexema();
+                a_i = a_a;
+                return ("-");
+            } else if (estado == 16) {
+                LEXEMA = obten_lexema();
+                a_i = a_a;
+                return ("*");
+            } else if (estado == 17) {
+                LEXEMA = obten_lexema();
+                a_i = a_a;
+                return ("/");
+            } else if (estado == 18) {
+                c = lee_car();
+                cambio(255, 19);
+            } else if (estado == 19) {
+                LEXEMA = obten_lexema();
+                a_i = a_a;
+                return ("eof");
+            } else if (estado == 20) {
+                cambio(new int[] { '(', ')' }, new int[] { 21, 22 });
+            } else if (estado == 21) {
+                LEXEMA = obten_lexema();
+                a_i = a_a;
+                return ("(");
+            } else if (estado == 22) {
+                LEXEMA = obten_lexema();
+                a_i = a_a;
+                return (")");
+            } else if (estado == 23) {
+                c = lee_car();
+                cambio(es_delim(c), 24);
+            } else if (estado == 24) {
+                c = lee_car();
+                if (es_delim(c))
+                    estado = 24;
+                else
+                    estado = 25;
+            } else if (estado == 25) {
+                a_a--;
+                LEXEMA = obten_lexema();
+                a_i = a_a;
+                return ("basura");
+            }
+
+            // Monumento a la mierda de estructura de control que es el switch
             switch (estado) {
                 case 0:
-                    c = lee_car();
-                    cambio(es_letra(c), 1);
+
                     break;
                 case 1:
-                    c = lee_car();
-                    if (es_letra(c) || es_digito(c))
-                        estado = 1;
-                    else if (c == '_')
-                        estado = 2;
-                    else
-                        estado = 3;
+
                     break;
                 case 2:
-                    c = lee_car();
-                    cambio(es_letra(c) || es_digito(c), 1);
+
                     break;
                 case 3:
-                    a_a--;
-                    LEXEMA = obten_lexema();
-                    a_i = a_a;
-                    return ("id");
+
                 case 4:
-                    c = lee_car();
-                    cambio(es_digito(c), 5);
+
                     break;
                 case 5:
-                    c = lee_car();
-                    if (es_digito(c))
-                        estado = 5;
-                    else if (c == 'e' || c == 'E')
-                        estado = 9;
-                    else if (c == '.')
-                        estado = 6;
-                    else
-                        estado = 8;
+
                     break;
                 case 6:
-                    c = lee_car();
-                    cambio(es_digito(c), 7);
+
                     break;
                 case 7:
-                    c = lee_car();
-                    if (es_digito(c))
-                        estado = 7;
-                    else if (c == 'e' || c == 'E')
-                        estado = 9;
-                    else
-                        estado = 8;
+
                     break;
                 case 8:
-                    a_a--;
-                    LEXEMA = obten_lexema();
-                    a_i = a_a;
-                    return ("num");
+
                 case 9:
-                    c = lee_car();
-                    if (c == '+' || c == '-')
-                        estado = 10;
-                    else if (es_digito(c))
-                        estado = 11;
-                    else
-                        estado = diagrama();
+
                     break;
                 case 10:
-                    c = lee_car();
-                    cambio(es_digito(c), 11);
+
                     break;
                 case 11:
-                    c = lee_car();
-                    if (es_digito(c))
-                        estado = 11;
-                    else
-                        estado = 12;
+
                     break;
                 case 12:
-                    a_a--;
-                    LEXEMA = obten_lexema();
-                    a_i = a_a;
-                    return ("num");
+
                 case 13:
-                    cambio(new int[] { '+', '-', '*', '/' }, new int[] { 14, 15, 16, 17 });
+
                     break;
                 case 14:
-                    LEXEMA = obten_lexema();
-                    a_i = a_a;
-                    return ("+");
+
                 case 15:
-                    LEXEMA = obten_lexema();
-                    a_i = a_a;
-                    return ("-");
+
                 case 16:
-                    LEXEMA = obten_lexema();
-                    a_i = a_a;
-                    return ("*");
+
                 case 17:
-                    LEXEMA = obten_lexema();
-                    a_i = a_a;
-                    return ("/");
+
                 case 18:
-                    c = lee_car();
-                    cambio(255, 19);
+
                     break;
                 case 19:
-                    LEXEMA = obten_lexema();
-                    a_i = a_a;
-                    return ("eof");
+
                 case 20:
-                    cambio(new int[] { '(', ')' }, new int[] { 21, 22 });
+
                     break;
                 case 21:
-                    LEXEMA = obten_lexema();
-                    a_i = a_a;
-                    return ("(");
+
                 case 22:
-                    LEXEMA = obten_lexema();
-                    a_i = a_a;
-                    return (")");
+
                 case 23:
-                    c = lee_car();
-                    cambio(es_delim(c), 24);
+
                     break;
                 case 24:
-                    c = lee_car();
-                    if (es_delim(c))
-                        estado = 24;
-                    else
-                        estado = 25;
+
                 case 25:
-                    a_a--;
-                    LEXEMA = obten_lexema();
-                    a_i = a_a;
-                    return ("basura");
+
             }
         }
     }
