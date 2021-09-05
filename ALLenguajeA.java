@@ -394,6 +394,8 @@ public class ALLenguajeA {
 
     public static void main(String args[]) {
 
+        String salida = "";
+
         try {
             entrada = args[0] + ".LA";
         } catch (Exception e) {
@@ -414,6 +416,11 @@ public class ALLenguajeA {
             MiToken = token();
 
             System.out.println("Token [" + MiToken + "] Lexema [" + LEXEMA + "] Linea [" + contLinea + "]");
+
+            salida = salida + "Token [" + MiToken + "] Lexema [" + LEXEMA + "] Linea [" + contLinea + "]\n";
+
         }
+
+        creaEscribeArchivo(xArchivo("salida.out"), salida);
     }
 }

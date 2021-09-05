@@ -1,0 +1,21 @@
+Token [basura] Lexema [      ] Linea [1]
+Token [id] Lexema [hola] Linea [1]
+Token [basura] Lexema [            ] Linea [1]
+Token [*] Lexema [*] Linea [1]
+Token [/] Lexema [/] Linea [1]
+Token [+] Lexema [+] Linea [1]
+Token [basura] Lexema [ ] Linea [1]
+Token [num] Lexema [54.35e-1] Linea [1]
+Token [basura] Lexema [ 
+
+  
+  
+] Linea [5]
+Token [-] Lexema [-] Linea [5]
+Token [/] Lexema [/] Linea [5]
+Token [basura] Lexema [ ] Linea [5]
+Token [num] Lexema [435.2E+10] Linea [5]
+Token [basura] Lexema [
+
+  ] Linea [8]
+
