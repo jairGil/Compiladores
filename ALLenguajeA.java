@@ -24,7 +24,8 @@ public class ALLenguajeA {
 
     // Imprime mensaje de error y sale del programa
     public static void rut_error() {
-        System.out.println("\n\nERROR: Linea [" + contLinea + "] Caracter [" + Character.toString(c) + "], compilacion terminada!!");
+        System.out.println("\n\nERROR: Linea [" + contLinea + "] Caracter [" + Character.toString(c)
+                + "], compilacion terminada!!");
         System.exit(4);
     }
 
@@ -64,7 +65,7 @@ public class ALLenguajeA {
     // Leer caracter a caracter de un arreglo
     public static char lee_car() {
         if (a_a < filesize) {
-            if (linea[a_a] == 10)
+            if (linea[a_a] == '\n')
                 contLinea++;
             return linea[a_a++];
         } else {
@@ -163,17 +164,14 @@ public class ALLenguajeA {
 
     // Encuentra un token y cambiar de estado
     public static String token() {
-        //int camino = -1;
+        // int camino = -1;
         while (true) {
-            /*// Print path 
-            if (camino != estado) {
-                camino = estado;
-                System.out.println(camino);
-
-            } else {
-                camino = estado;
-            }
-            */
+            /*
+             * // Print path if (camino != estado) { camino = estado;
+             * System.out.println(camino);
+             * 
+             * } else { camino = estado; }
+             */
             switch (estado) {
                 case 0:
                     c = lee_car();
@@ -185,7 +183,7 @@ public class ALLenguajeA {
                         estado = 1;
                     else if (c == '_')
                         estado = 2;
-                    else 
+                    else
                         estado = 3;
                     break;
                 case 2:
@@ -222,7 +220,7 @@ public class ALLenguajeA {
                         estado = 7;
                     else if (c == 'e' || c == 'E')
                         estado = 9;
-                    else 
+                    else
                         estado = 8;
                     break;
                 case 8:
@@ -247,7 +245,7 @@ public class ALLenguajeA {
                     c = lee_car();
                     if (es_digito(c))
                         estado = 11;
-                    else 
+                    else
                         estado = 12;
                     break;
                 case 12:
@@ -256,7 +254,7 @@ public class ALLenguajeA {
                     a_i = a_a;
                     return ("num");
                 case 13:
-                    cambio(new int[] {'+', '-', '*', '/'}, new int[] {14, 15, 16, 17});
+                    cambio(new int[] { '+', '-', '*', '/' }, new int[] { 14, 15, 16, 17 });
                     break;
                 case 14:
                     LEXEMA = obten_lexema();
@@ -283,7 +281,7 @@ public class ALLenguajeA {
                     a_i = a_a;
                     return ("eof");
                 case 20:
-                    cambio(new int[] {'(', ')'}, new int[] {21, 22});
+                    cambio(new int[] { '(', ')' }, new int[] { 21, 22 });
                     break;
                 case 21:
                     LEXEMA = obten_lexema();
@@ -295,7 +293,7 @@ public class ALLenguajeA {
                     return (")");
                 case 23:
                     c = lee_car();
-                    cambio(es_delim(c), 24)                    ;
+                    cambio(es_delim(c), 24);
                     break;
                 case 24:
                     c = lee_car();
@@ -311,7 +309,7 @@ public class ALLenguajeA {
             }
         }
     }
-    
+
     public static String obten_lexema() {
         String xx = "";
         for (int i = a_i; i < a_a; i++)
