@@ -16,6 +16,24 @@ Token [/] Lexema [/] Linea [5]
 Token [basura] Lexema [ ] Linea [5]
 Token [num] Lexema [435.2E+10] Linea [5]
 Token [basura] Lexema [
+                    
+  
+  
+  
+] Linea [10]
+Token [id] Lexema [asd] Linea [10]
+Token [basura] Lexema [
 
-  ] Linea [8]
+
+] Linea [13]
+Token [-] Lexema [-] Linea [13]
+Token [/] Lexema [/] Linea [13]
+Token [basura] Lexema [ ] Linea [13]
+Token [num] Lexema [435.2E+10] Linea [13]
+Token [basura] Lexema [
+
+] Linea [15]
+Token [num] Lexema [34] Linea [15]
+Token [basura] Lexema [
+] Linea [16]
 

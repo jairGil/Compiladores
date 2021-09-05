@@ -44,8 +44,12 @@ public class ALLenguajeA {
     }
 
     public static boolean es_delim(int x) {
-        if (x == 9 || x == 10 || x == 13 || x == 32)
+        if (x == 9 || x == 10 || x == 13 || x == 32) {
+            if (x == 10) {
+                contLinea++;
+            }
             return true;
+        }
         return false;
     }
 
@@ -65,11 +69,6 @@ public class ALLenguajeA {
     // Leer caracter a caracter de un arreglo
     public static char lee_car() {
         if (a_a < filesize) {
-            if (linea[a_a] == '\n') {
-                contLinea++;
-                System.out.println((int) linea[a_a]);
-
-            }
             return linea[a_a++];
         } else {
             fin_archivo = true;
