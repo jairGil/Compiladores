@@ -1,0 +1,13 @@
+ DATOS SEGMENT   
+    CadenaP   db 100 DUP ('$')
+    CadenaI   db 100 DUP ('$')
+    Palabra   db 24  DUP ('$')
+    LongitudP dw 0 
+    Residuo   db 0 
+    Cero      db 0
+    dos db 2
+
+ DATOS ENDS
+
+
+ CODIGO ENDS
