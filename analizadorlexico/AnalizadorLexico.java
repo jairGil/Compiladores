@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package analizadorlexico;
 
 import java.io.BufferedReader;
@@ -12,10 +8,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/**
- *
- * @author mari2
- */
 public class AnalizadorLexico {
 
     public static int filesize = 0;
@@ -45,8 +37,7 @@ public class AnalizadorLexico {
         if (a_a <= filesize - 1) {
             return linea[a_a++];
         } else {
-            // System.out.println("Llegue al final");
-            // pausa();
+
             fin_archivo = true;
             return 255;
         }
@@ -62,7 +53,6 @@ public class AnalizadorLexico {
         return xFile;
     }
 
-    // Usando codigo ascii
     public static boolean es_let_hex(int X) {
         if (X >= 65 && X <= 70) {
             return (true);
@@ -77,7 +67,6 @@ public class AnalizadorLexico {
         return (false);
     }
 
-    // Solo da los valores del simbolo o numero
     public static boolean es_numero(int X) {
         if (X >= 48 && X <= 57) {
             return (true);
@@ -92,7 +81,6 @@ public class AnalizadorLexico {
         return (false);
     }
 
-    // Concatena lo que se tenga almacenado del estadeo
     public static String obten_lexema() {
         String xx = "";
         for (int i = a_i; i <= a_a - 1; i++) {
@@ -101,8 +89,6 @@ public class AnalizadorLexico {
         return (xx);
     }
 
-    // Objetivo: cuando no se pasa por un estado, se invoca y regresa el apuntador
-    // de avance al inicio y hay cambio de diagrama, envia el valor del comienzo
     public static int diagrama() {
         a_a = a_i;
         switch (COMIENZO) {
@@ -141,7 +127,6 @@ public class AnalizadorLexico {
         return (COMIENZO);
     }
 
-    // Busca cambiar de un estado a otro teniendo en cuenta los 4 tipos de estados
     public static String TOKEN() {
         while (true) {
             switch (ESTADO) {
@@ -169,7 +154,7 @@ public class AnalizadorLexico {
                         ESTADO = diagrama();
                     }
                     break;
-                // Estado aceptación sin asterisco
+
                 case 3:
                     LEXEMA = obten_lexema();
                     a_i = a_a;
@@ -448,7 +433,7 @@ public class AnalizadorLexico {
                         ESTADO = diagrama();
                     }
                     break;
-                // Estado que pasa por otro
+
                 case 40:
                     c = lee_car();
                     if (es_letra(c) || es_numero(c)) {
@@ -502,7 +487,7 @@ public class AnalizadorLexico {
                         ESTADO = diagrama();
                     }
                     break;
-                // Estado que pasa por otro
+
                 case 47:
                     c = lee_car();
                     if (es_delim(c)) {
@@ -555,17 +540,7 @@ public class AnalizadorLexico {
     }
 
     public static void main(String argumento[]) {
-        // linea = abreLeeCierra("Intento.txt");
-        // for (int i = 1; i <= 500; i++) {
-        // System.out.println(i + " " + linea[i]);
-        // pausa();
-        // }
-        // System.out.println("Parametro 1:"+argumento[0]);
-        // pausa();
-        // System.out.println("Parametro 1:"+argumento[1]);
-        // pausa();
-        // System.out.println("Parametro 1:"+argumento[2]);
-        // pausa();
+
         try {
             Entrada = argumento[0] + ".asm";
         } catch (Exception e) {
@@ -576,7 +551,7 @@ public class AnalizadorLexico {
             System.out.println("El archivo [" + Entrada + "] no existe");
             System.exit(4);
         }
-        // pausa();
+
         linea = abreLeeCierra(Entrada);
         while (!fin_archivo) {
             ESTADO = 0;

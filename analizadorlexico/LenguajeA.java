@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package analizadorlexico;
 
 import java.io.BufferedReader;
@@ -14,10 +10,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
-/**
- *
- * @author mari2
- */
 public class LenguajeA {
 
     public static int filesize = 0;
@@ -36,7 +28,6 @@ public class LenguajeA {
                 + "compilacion terminada\n");
         System.exit(4);
     }
-    // Usando codigo ascii
 
     public static boolean es_letra(int X) {
         if (X >= 65 && X <= 90 || X >= 97 && X <= 122) {
@@ -45,7 +36,6 @@ public class LenguajeA {
         return (false);
     }
 
-    // Solo da los valores del simbolo o numero
     public static boolean es_digito(int X) {
         if (X >= 48 && X <= 57) {
             return (true);
@@ -59,7 +49,6 @@ public class LenguajeA {
         }
         return (false);
     }
-    // Inicio de la instrucción Mov, Add, Jmp, Nop
 
     public static String pausa() {
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
@@ -154,7 +143,6 @@ public class LenguajeA {
         return (COMIENZO);
     }
 
-    // Busca cambiar de un estado a otro teniendo en cuenta los 4 tipos de estados
     public static String TOKEN() {
         while (true) {
             switch (ESTADO) {
@@ -246,7 +234,7 @@ public class LenguajeA {
                         }
                     }
                     break;
-                // regresa estado con asterisco
+
                 case 8:
                     a_a--;
                     LEXEMA = obten_lexema();
@@ -305,7 +293,7 @@ public class LenguajeA {
                             break;
                     }
                     break;
-                // estados sin asteriscos
+
                 case 14:
                     LEXEMA = obten_lexema();
                     a_i = a_a;
@@ -384,7 +372,6 @@ public class LenguajeA {
     }
 
     public static void main(String argumento[]) {
-        // probando
 
         try {
             Entrada = argumento[0] + ".LA";
@@ -397,28 +384,25 @@ public class LenguajeA {
             System.exit(4);
         }
         Salida = argumento[0] + ".LA1";
-        // pausa();
+
         linea = abreLeeCierra(Entrada);
         while (!fin_archivo) {
             ESTADO = 0;
             COMIENZO = 0;
             MiToken = TOKEN();
-            // System.out.println(ContRen);
-            // System.out.println(".");
+
             if (!MiToken.equals("basura")) {
                 creaEscribeArchivo(xArchivo(Salida), MiToken);
                 creaEscribeArchivo(xArchivo(Salida), LEXEMA);
                 creaEscribeArchivo(xArchivo(Salida), ContRen + "");
             }
-            // System.out.println("Encontre token [" + MiToken + "] con lexema[" + LEXEMA +
-            // "]");
 
         }
         creaEscribeArchivo(xArchivo(Salida), "eof");
         creaEscribeArchivo(xArchivo(Salida), "eof");
         creaEscribeArchivo(xArchivo(Salida), "53");
         System.out.println("");
-        // System.out.println("\nAnalisis lexicografico existoso");
+
     }
 
 }

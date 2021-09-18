@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package analizadorlexico;
 
 import java.io.BufferedReader;
@@ -11,10 +7,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-/**
- *
- * @author mari2
- */
 public class RecDesc2 {
     static int Posicion = 0;
     static String CABEZA, LEXEMA, RENGLON, Entrada;
@@ -23,7 +15,7 @@ public class RecDesc2 {
         try {
             FileReader fr = new FileReader(xFile);
             BufferedReader br = new BufferedReader(fr);
-            // long NoSirve = br.skip(Posicion);
+
             String linea = br.readLine();
             Posicion = Posicion + linea.length() + 2;
             CABEZA = linea;
@@ -71,7 +63,6 @@ public class RecDesc2 {
         }
     }
 
-    // terminales se asocian , NO terminarles metodo
     public static void A() {
         switch (CABEZA) {
             case "id":
@@ -112,7 +103,6 @@ public class RecDesc2 {
 
     }
 
-    // si derivan al vacio no se llama la rutina de error
     public static void C() {
         switch (CABEZA) {
             case "id":
@@ -139,9 +129,9 @@ public class RecDesc2 {
             System.out.println("\7El archivo [" + Entrada + "] no existe");
             System.exit(4);
         }
-        // Salida = argumento[0] + ".LA1";
+
         sig_cabeza(xArchivo(Entrada));
-        // Se llama al SIG
+
         A();
         if (!CABEZA.equals("eof"))
             rut_error();
