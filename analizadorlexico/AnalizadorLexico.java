@@ -45,11 +45,11 @@ public class AnalizadorLexico {
         if (a_a <= filesize - 1) {
             return linea[a_a++];
         } else {
-//            System.out.println("Llegue al final");
-//            pausa();
+            // System.out.println("Llegue al final");
+            // pausa();
             fin_archivo = true;
             return 255;
-        }  
+        }
     }
 
     public static void rut_error() {
@@ -62,7 +62,7 @@ public class AnalizadorLexico {
         return xFile;
     }
 
-    //Usando codigo ascii
+    // Usando codigo ascii
     public static boolean es_let_hex(int X) {
         if (X >= 65 && X <= 70) {
             return (true);
@@ -77,7 +77,7 @@ public class AnalizadorLexico {
         return (false);
     }
 
-    //Solo da los valores del simbolo o numero
+    // Solo da los valores del simbolo o numero
     public static boolean es_numero(int X) {
         if (X >= 48 && X <= 57) {
             return (true);
@@ -92,7 +92,7 @@ public class AnalizadorLexico {
         return (false);
     }
 
-    //Concatena lo que se tenga almacenado del estadeo
+    // Concatena lo que se tenga almacenado del estadeo
     public static String obten_lexema() {
         String xx = "";
         for (int i = a_i; i <= a_a - 1; i++) {
@@ -101,8 +101,8 @@ public class AnalizadorLexico {
         return (xx);
     }
 
-    //Objetivo: cuando no se pasa por un estado, se invoca y regresa el apuntador
-    //de avance al inicio y hay cambio de diagrama, envia el valor del comienzo
+    // Objetivo: cuando no se pasa por un estado, se invoca y regresa el apuntador
+    // de avance al inicio y hay cambio de diagrama, envia el valor del comienzo
     public static int diagrama() {
         a_a = a_i;
         switch (COMIENZO) {
@@ -141,7 +141,7 @@ public class AnalizadorLexico {
         return (COMIENZO);
     }
 
-    //Busca cambiar de un estado a otro teniendo en cuenta los 4 tipos de estados
+    // Busca cambiar de un estado a otro teniendo en cuenta los 4 tipos de estados
     public static String TOKEN() {
         while (true) {
             switch (ESTADO) {
@@ -502,7 +502,7 @@ public class AnalizadorLexico {
                         ESTADO = diagrama();
                     }
                     break;
-                //Estado que pasa por otro
+                // Estado que pasa por otro
                 case 47:
                     c = lee_car();
                     if (es_delim(c)) {
@@ -542,28 +542,30 @@ public class AnalizadorLexico {
         try {
             FileReader fin = new FileReader(xFile);
             filesize = (int) xFile.length();
-            data = new char[filesize+1];
+            data = new char[filesize + 1];
             fin.read(data, 0, filesize);
-            data[filesize]=' ';
-            filesize=filesize+1;
-            return(data);
-        } catch (FileNotFoundException exc) {} 
-        catch (IOException exc) {}
+            data[filesize] = ' ';
+            filesize = filesize + 1;
+            fin.close();
+            return (data);
+        } catch (FileNotFoundException exc) {
+        } catch (IOException exc) {
+        }
         return null;
     }
 
     public static void main(String argumento[]) {
-//        linea = abreLeeCierra("Intento.txt");
-//        for (int i = 1; i <= 500; i++) {
-//            System.out.println(i + " " + linea[i]);
-//            pausa();
-//        }
-//    System.out.println("Parametro 1:"+argumento[0]);
-//    pausa();
-//    System.out.println("Parametro 1:"+argumento[1]);
-//    pausa();
-//    System.out.println("Parametro 1:"+argumento[2]);
-//    pausa();
+        // linea = abreLeeCierra("Intento.txt");
+        // for (int i = 1; i <= 500; i++) {
+        // System.out.println(i + " " + linea[i]);
+        // pausa();
+        // }
+        // System.out.println("Parametro 1:"+argumento[0]);
+        // pausa();
+        // System.out.println("Parametro 1:"+argumento[1]);
+        // pausa();
+        // System.out.println("Parametro 1:"+argumento[2]);
+        // pausa();
         try {
             Entrada = argumento[0] + ".asm";
         } catch (Exception e) {
@@ -574,7 +576,7 @@ public class AnalizadorLexico {
             System.out.println("El archivo [" + Entrada + "] no existe");
             System.exit(4);
         }
-        //   pausa();
+        // pausa();
         linea = abreLeeCierra(Entrada);
         while (!fin_archivo) {
             ESTADO = 0;

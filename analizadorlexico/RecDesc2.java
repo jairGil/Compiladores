@@ -16,14 +16,14 @@ import java.io.InputStreamReader;
  * @author mari2
  */
 public class RecDesc2 {
-      static int Posicion = 0;
+    static int Posicion = 0;
     static String CABEZA, LEXEMA, RENGLON, Entrada;
 
     public static void sig_cabeza(File xFile) {
         try {
             FileReader fr = new FileReader(xFile);
             BufferedReader br = new BufferedReader(fr);
-            long NoSirve = br.skip(Posicion);
+            // long NoSirve = br.skip(Posicion);
             String linea = br.readLine();
             Posicion = Posicion + linea.length() + 2;
             CABEZA = linea;
@@ -70,60 +70,62 @@ public class RecDesc2 {
             rut_error();
         }
     }
-//terminales se asocian , NO terminarles metodo
+
+    // terminales se asocian , NO terminarles metodo
     public static void A() {
-          switch (CABEZA) {
-              case "id":
-                  asocia("id");
-                  asocia("*");
-                  B();
-                  break;
-              case "num":
-                  asocia("num");
-                  asocia("-");
-                  asocia("num");
-                  break;
-              default:
-                  rut_error();
-                  break;
-          }
+        switch (CABEZA) {
+            case "id":
+                asocia("id");
+                asocia("*");
+                B();
+                break;
+            case "num":
+                asocia("num");
+                asocia("-");
+                asocia("num");
+                break;
+            default:
+                rut_error();
+                break;
+        }
     }
 
     public static void B() {
-          switch (CABEZA) {
-              case "num":
-                  asocia("num");
-                  asocia("+");
-                  asocia("pa");
-                  break;
-              case "id":
-                  asocia("id");
-                  B();
-                  break;
-              case "pa":
-                  asocia("pa");
-                  C();
-                  break;
-              default:
-                  rut_error();
-                  break;
-          }
-            
+        switch (CABEZA) {
+            case "num":
+                asocia("num");
+                asocia("+");
+                asocia("pa");
+                break;
+            case "id":
+                asocia("id");
+                B();
+                break;
+            case "pa":
+                asocia("pa");
+                C();
+                break;
+            default:
+                rut_error();
+                break;
+        }
+
     }
-    //si derivan al vacio no se llama la rutina de error
+
+    // si derivan al vacio no se llama la rutina de error
     public static void C() {
-          switch (CABEZA) {
-              case "id":
-                  asocia("id");
-                  break;
-              case "+":
-                  asocia("+");
-                  break;
-              default:
-                  rut_error();
-                  break;
-          }
-            
+        switch (CABEZA) {
+            case "id":
+                asocia("id");
+                break;
+            case "+":
+                asocia("+");
+                break;
+            default:
+                rut_error();
+                break;
+        }
+
     }
 
     public static void main(String argumento[]) {
@@ -137,13 +139,13 @@ public class RecDesc2 {
             System.out.println("\7El archivo [" + Entrada + "] no existe");
             System.exit(4);
         }
-        //Salida = argumento[0] + ".LA1";
+        // Salida = argumento[0] + ".LA1";
         sig_cabeza(xArchivo(Entrada));
-        //Se llama al SIG 
+        // Se llama al SIG
         A();
-        if(!CABEZA.equals("eof"))
+        if (!CABEZA.equals("eof"))
             rut_error();
-        
+
         System.out.println("");
 
     }

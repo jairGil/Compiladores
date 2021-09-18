@@ -16,7 +16,7 @@ import java.io.InputStreamReader;
  * @author mari2
  */
 public class RecDesc {
-    //RescDescLA
+    // RescDescLA
     static int Posicion = 0;
     static String CABEZA, LEXEMA, RENGLON, Entrada;
 
@@ -24,7 +24,7 @@ public class RecDesc {
         try {
             FileReader fr = new FileReader(xFile);
             BufferedReader br = new BufferedReader(fr);
-            long NoSirve = br.skip(Posicion);
+            // long NoSirve = br.skip(Posicion);
             String linea = br.readLine();
             Posicion = Posicion + linea.length() + 2;
             CABEZA = linea;
@@ -100,16 +100,17 @@ public class RecDesc {
         }
 
     }
-    //si derivan al vacio no se llama la rutina de error
+
+    // si derivan al vacio no se llama la rutina de error
     public static void SIG() {
-        if(CABEZA.equals("+")||CABEZA.equals("-")||CABEZA.equals("*")||CABEZA.equals("/")){
+        if (CABEZA.equals("+") || CABEZA.equals("-") || CABEZA.equals("*") || CABEZA.equals("/")) {
             OP();
             EXP();
         }
-            
+
     }
-    
-    public static void OP(){
+
+    public static void OP() {
         switch (CABEZA) {
             case "+":
                 asocia("+");
@@ -140,16 +141,16 @@ public class RecDesc {
             System.out.println("\7El archivo [" + Entrada + "] no existe");
             System.exit(4);
         }
-        //Salida = argumento[0] + ".LA1";
+        // Salida = argumento[0] + ".LA1";
         sig_cabeza(xArchivo(Entrada));
         EXP();
-        if(!CABEZA.equals("eof"))
+        if (!CABEZA.equals("eof"))
             rut_error();
-        
-        System.out.println("");
-//        System.out.println("Cabeza (" + CABEZA + ") , Lexema (" + LEXEMA + ") Renglon (" + RENGLON + ")");
-//        pausa();
 
+        System.out.println("");
+        // System.out.println("Cabeza (" + CABEZA + ") , Lexema (" + LEXEMA + ") Renglon
+        // (" + RENGLON + ")");
+        // pausa();
 
     }
 

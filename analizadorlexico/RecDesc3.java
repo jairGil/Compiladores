@@ -23,7 +23,7 @@ public class RecDesc3 {
         try {
             FileReader fr = new FileReader(xFile);
             BufferedReader br = new BufferedReader(fr);
-            long NoSirve = br.skip(Posicion);
+            // long NoSirve = br.skip(Posicion);
             String linea = br.readLine();
             Posicion = Posicion + linea.length() + 2;
             CABEZA = linea;
@@ -70,38 +70,39 @@ public class RecDesc3 {
             rut_error();
         }
     }
-//terminales se asocian , NO terminarles metodo, rutinas
-//si derivan al vacio no se llama la rutina de error
-    
-    public static void ELEM(){
-           switch (CABEZA) {
-               case "num":
-                   asocia("num");
-                   break;
-               case "id":
-                   asocia("id");
-                   break;
-               case "pa":
-                   asocia("pa");
-                   LISTA();
-                   asocia("pc");
-                   break;
-               default:
-                   rut_error();
-                   break;
-           }
+    // terminales se asocian , NO terminarles metodo, rutinas
+    // si derivan al vacio no se llama la rutina de error
+
+    public static void ELEM() {
+        switch (CABEZA) {
+            case "num":
+                asocia("num");
+                break;
+            case "id":
+                asocia("id");
+                break;
+            case "pa":
+                asocia("pa");
+                LISTA();
+                asocia("pc");
+                break;
+            default:
+                rut_error();
+                break;
+        }
     }
-    //rutina factorizada
-    public static void LISTA(){
-        if(CABEZA.equals("num")|| CABEZA.equals("id")||CABEZA.equals("pa")){
-          ELEM();
-          LISTA_P();
-        }else{
+
+    // rutina factorizada
+    public static void LISTA() {
+        if (CABEZA.equals("num") || CABEZA.equals("id") || CABEZA.equals("pa")) {
+            ELEM();
+            LISTA_P();
+        } else {
             rut_error();
         }
     }
-    
-    public static void LISTA_P(){
+
+    public static void LISTA_P() {
         switch (CABEZA) {
             case "+":
                 asocia("+");
@@ -124,7 +125,6 @@ public class RecDesc3 {
         }
     }
 
-
     public static void main(String argumento[]) {
         try {
             Entrada = argumento[0] + ".LA1";
@@ -136,13 +136,13 @@ public class RecDesc3 {
             System.out.println("\7El archivo [" + Entrada + "] no existe");
             System.exit(4);
         }
-        //Salida = argumento[0] + ".LA1";
+        // Salida = argumento[0] + ".LA1";
         sig_cabeza(xArchivo(Entrada));
-        //Se llama al SIG 
+        // Se llama al SIG
         LISTA();
-        if(!CABEZA.equals("eof"))
+        if (!CABEZA.equals("eof"))
             rut_error();
-        
+
         System.out.println("");
 
     }
