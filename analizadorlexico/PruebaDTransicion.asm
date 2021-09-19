@@ -1,4 +1,4 @@
 	MOV AL, AH
 	JMP :hOLA27
 	ADD 45EF2h
-(Salud12) NOP
+(Salud1) :NOP

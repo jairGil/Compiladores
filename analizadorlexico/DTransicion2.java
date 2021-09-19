@@ -49,8 +49,9 @@ public class DTransicion2 {
     }
 
     public static void rut_error() {
-        System.out.println("\n\n Error: caracter [" + Character.toString((char) c) + "] en la linea" + ContRen
+        System.out.println("\n\n Error: caracter [" + Character.toString((char) c) + "] en la linea " + ContRen
                 + " compilacion terminada\n");
+        new File(Salida).delete();
         System.exit(4);
     }
 

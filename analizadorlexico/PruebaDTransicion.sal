@@ -23,10 +23,10 @@ numhex
 45EF2h
 3
 etq_dest
-(Salud12)
+(Salud1)
 4
-inst
-NOP
+ll_etq
+:NOP
 4
 eof
 eof
