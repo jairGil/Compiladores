@@ -49,8 +49,8 @@ public class DTransicion2 {
     }
 
     public static void rut_error() {
-        System.out.println("\n\n Error: caracter[" + Character.toString((char) c) + "] en la linea" + ContRen
-                + "compilacion terminada\n");
+        System.out.println("\n\n Error: caracter [" + Character.toString((char) c) + "] en la linea" + ContRen
+                + " compilacion terminada\n");
         System.exit(4);
     }
 
@@ -430,14 +430,16 @@ public class DTransicion2 {
             System.out.println("El archivo [" + Entrada + "] no existe");
             System.exit(4);
         }
+
         Salida = argumento[0] + ".sal";
+
+        new File(Salida).delete();
 
         linea = abreLeeCierra(Entrada);
         while (!fin_archivo) {
             ESTADO = 0;
             COMIENZO = 0;
             MiToken = TOKEN();
-            System.out.println(ContRen);
             if (!MiToken.equals("nosirve")) {
                 creaEscribeArchivo(xArchivo(Salida), MiToken);
                 creaEscribeArchivo(xArchivo(Salida), LEXEMA);
@@ -445,6 +447,11 @@ public class DTransicion2 {
             }
 
         }
+
+        creaEscribeArchivo(xArchivo(Salida), "eof");
+        creaEscribeArchivo(xArchivo(Salida), "eof");
+        creaEscribeArchivo(xArchivo(Salida), "" + (ContRen + 1));
+
         System.out.println("Analisis lexicografico existoso");
     }
 

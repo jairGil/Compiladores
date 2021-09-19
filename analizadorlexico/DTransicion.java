@@ -5,8 +5,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 
 public class DTransicion {
 
@@ -16,10 +18,10 @@ public class DTransicion {
     public static boolean fin_archivo = false;
     public static int a_a = 0;
     public static int a_i = 0;
-    public static int c;
+    public static int c, ContRen = 1;
     public static int COMIENZO, ESTADO;
     public static String LEXEMA, MiToken;
-    public static String Entrada;
+    public static String Entrada, Salida;
 
     public static String pausa() {
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
@@ -35,6 +37,9 @@ public class DTransicion {
 
     public static int lee_car() {
         if (a_a <= filesize - 1) {
+            if (linea[a_a] == 10) {
+                ContRen++;
+            }
             return linea[a_a++];
         } else {
 
@@ -44,7 +49,8 @@ public class DTransicion {
     }
 
     public static void rut_error() {
-        System.out.println("\n\n Error: caracter[" + Character.toString((char) c) + "]compilacion terminada\n");
+        System.out.println("\n\n Error: caracter [" + Character.toString((char) c) + "] en la linea" + ContRen
+                + " compilacion terminada\n");
         System.exit(4);
     }
 
@@ -539,6 +545,18 @@ public class DTransicion {
         return null;
     }
 
+    public static boolean creaEscribeArchivo(File xFile, String mensaje) {
+        try {
+            PrintWriter fileOut = new PrintWriter(new FileWriter(xFile, true));
+            fileOut.println(mensaje);
+            fileOut.close();
+            return true;
+
+        } catch (IOException ex) {
+            return false;
+        }
+    }
+
     public static void main(String argumento[]) {
 
         try {
@@ -552,14 +570,29 @@ public class DTransicion {
             System.exit(4);
         }
 
+        Salida = argumento[0] + ".sal";
+
+        new File(Salida).delete();
+
         linea = abreLeeCierra(Entrada);
         while (!fin_archivo) {
             ESTADO = 0;
             COMIENZO = 0;
             MiToken = TOKEN();
-            System.out.println("Encontre token [" + MiToken + "} con lexema[" + LEXEMA + "]");
-            pausa();
+            // System.out.println("Encontre token [" + MiToken + "} con lexema[" + LEXEMA +
+            // "]");
+            // pausa();
+            if (!MiToken.equals("nosirve")) {
+                creaEscribeArchivo(xArchivo(Salida), MiToken);
+                creaEscribeArchivo(xArchivo(Salida), LEXEMA);
+                creaEscribeArchivo(xArchivo(Salida), ContRen + "");
+            }
         }
+
+        creaEscribeArchivo(xArchivo(Salida), "eof");
+        creaEscribeArchivo(xArchivo(Salida), "eof");
+        creaEscribeArchivo(xArchivo(Salida), "" + (ContRen + 1));
+
         System.out.println("Analisis lexicografico existoso");
     }
 
