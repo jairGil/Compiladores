@@ -7,7 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class RecDesc {
+public class RecDescLA {
 
     static int Posicion = 0;
     static String CABEZA, LEXEMA, RENGLON, Entrada;

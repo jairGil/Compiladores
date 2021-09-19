@@ -5,24 +5,21 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 
-public class Analizador2 {
+public class DTransicion {
 
     public static int filesize = 0;
     public static char[] linea;
-    static String[] pr = new String[100];
     public static String hola;
     public static boolean fin_archivo = false;
     public static int a_a = 0;
     public static int a_i = 0;
-    public static int c, ContRen = 1;
+    public static int c;
     public static int COMIENZO, ESTADO;
     public static String LEXEMA, MiToken;
-    public static String Entrada = "", Salida = "";
+    public static String Entrada;
 
     public static String pausa() {
         BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
@@ -38,19 +35,16 @@ public class Analizador2 {
 
     public static int lee_car() {
         if (a_a <= filesize - 1) {
-            if (linea[a_a] == 10) {
-                ContRen++;
-            }
             return linea[a_a++];
         } else {
+
             fin_archivo = true;
             return 255;
         }
     }
 
     public static void rut_error() {
-        System.out.println("\n\n Error: caracter[" + Character.toString((char) c) + "] en la linea" + ContRen
-                + "compilacion terminada\n");
+        System.out.println("\n\n Error: caracter[" + Character.toString((char) c) + "]compilacion terminada\n");
         System.exit(4);
     }
 
@@ -87,26 +81,6 @@ public class Analizador2 {
         return (false);
     }
 
-    public static boolean es_mayuscula(int X) {
-        if (X >= 65 && X <= 90) {
-            return true;
-        }
-        return false;
-    }
-
-    public static boolean es_pr(String X) {
-        pr[0] = "MOV";
-        pr[1] = "JMP";
-        pr[2] = "ADD";
-        pr[3] = "NOP";
-        for (int i = 0; i <= 3; i++) {
-            if (pr[i].equals(X)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public static String obten_lexema() {
         String xx = "";
         for (int i = a_i; i <= a_a - 1; i++) {
@@ -119,27 +93,33 @@ public class Analizador2 {
         a_a = a_i;
         switch (COMIENZO) {
             case 0:
-                COMIENZO = 2;
+                COMIENZO = 4;
                 break;
-            case 2:
-                COMIENZO = 11;
+            case 4:
+                COMIENZO = 8;
                 break;
-            case 11:
-                COMIENZO = 14;
+            case 8:
+                COMIENZO = 12;
                 break;
-            case 14:
-                COMIENZO = 17;
+            case 12:
+                COMIENZO = 16;
                 break;
-            case 17:
-                COMIENZO = 21;
+            case 16:
+                COMIENZO = 18;
                 break;
-            case 21:
-                COMIENZO = 25;
+            case 18:
+                COMIENZO = 35;
                 break;
-            case 25:
-                COMIENZO = 28;
+            case 35:
+                COMIENZO = 38;
                 break;
-            case 28:
+            case 38:
+                COMIENZO = 42;
+                break;
+            case 42:
+                COMIENZO = 46;
+                break;
+            case 46:
                 rut_error();
                 break;
 
@@ -152,234 +132,384 @@ public class Analizador2 {
             switch (ESTADO) {
                 case 0:
                     c = lee_car();
-                    if (c == ',') {
+                    if (c == 'M') {
                         ESTADO = 1;
                     } else {
                         ESTADO = diagrama();
                     }
                     break;
                 case 1:
-                    LEXEMA = obten_lexema();
-                    a_i = a_a;
-                    return ("sep");
-                case 2:
                     c = lee_car();
-                    switch (c) {
-                        case 'A':
-                            ESTADO = 3;
-                            break;
-                        case 'B':
-                            ESTADO = 3;
-                            break;
-                        case 'C':
-                            ESTADO = 3;
-                            break;
-                        case 'D':
-                            ESTADO = 7;
-                            break;
-                        case 'I':
-                            ESTADO = 9;
-                            break;
-                        default:
-                            ESTADO = diagrama();
-
-                    }
-                    break;
-                case 3:
-                    c = lee_car();
-                    switch (c) {
-                        case 'X':
-                            ESTADO = 4;
-                            break;
-                        case 'H':
-                            ESTADO = 5;
-                            break;
-                        case 'L':
-                            ESTADO = 6;
-                            break;
-                        default:
-                            ESTADO = diagrama();
-                    }
-                    break;
-                case 4:
-                    LEXEMA = obten_lexema();
-                    a_i = a_a;
-                    return ("reg");
-                case 5:
-                    LEXEMA = obten_lexema();
-                    a_i = a_a;
-                    return ("reg");
-                case 6:
-                    LEXEMA = obten_lexema();
-                    a_i = a_a;
-                    return ("reg");
-                case 7:
-                    c = lee_car();
-                    if (c == 'I') {
-                        ESTADO = 8;
+                    if (c == 'O') {
+                        ESTADO = 2;
                     } else {
                         ESTADO = diagrama();
                     }
                     break;
-                case 8:
+                case 2:
+                    c = lee_car();
+                    if (c == 'V') {
+                        ESTADO = 3;
+                    } else {
+                        ESTADO = diagrama();
+                    }
+                    break;
+
+                case 3:
                     LEXEMA = obten_lexema();
                     a_i = a_a;
-                    return ("reg");
+                    return ("inst");
+
+                case 4:
+                    c = lee_car();
+                    if (c == 'A') {
+                        ESTADO = 5;
+                    } else {
+                        ESTADO = diagrama();
+                    }
+                    break;
+                case 5:
+                    c = lee_car();
+                    if (c == 'D') {
+                        ESTADO = 6;
+                    } else {
+                        ESTADO = diagrama();
+                    }
+                    break;
+                case 6:
+                    c = lee_car();
+                    if (c == 'D') {
+                        ESTADO = 7;
+                    } else {
+                        ESTADO = diagrama();
+                    }
+                    break;
+                case 7:
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return ("inst");
+                case 8:
+                    c = lee_car();
+                    if (c == 'J') {
+                        ESTADO = 9;
+                    } else {
+                        ESTADO = diagrama();
+                    }
+                    break;
                 case 9:
                     c = lee_car();
-                    if (c == 'P') {
+                    if (c == 'M') {
                         ESTADO = 10;
                     } else {
                         ESTADO = diagrama();
                     }
                     break;
                 case 10:
-                    LEXEMA = obten_lexema();
-                    a_i = a_a;
-                    return ("reg");
-                case 11:
                     c = lee_car();
-                    if (es_mayuscula(c)) {
-                        ESTADO = 12;
+                    if (c == 'P') {
+                        ESTADO = 11;
                     } else {
                         ESTADO = diagrama();
                     }
                     break;
+                case 11:
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return ("inst");
                 case 12:
                     c = lee_car();
-                    if (es_mayuscula(c)) {
-                        ESTADO = 12;
-                    } else {
+                    if (c == 'N') {
                         ESTADO = 13;
+                    } else {
+                        ESTADO = diagrama();
+                    }
+                    break;
+                case 13:
+                    c = lee_car();
+                    if (c == 'O') {
+                        ESTADO = 14;
+                    } else {
+                        ESTADO = diagrama();
                     }
                     break;
 
-                case 13:
-                    a_a = a_a - 1;
-                    LEXEMA = obten_lexema();
-                    a_i = a_a;
-                    if (es_pr(LEXEMA)) {
-                        a_i = a_a;
-                        return ("inst");
-                    }
-                    ESTADO = diagrama();
-                    break;
                 case 14:
                     c = lee_car();
-                    if (es_let_hex(c) || es_numero(c)) {
+                    if (c == 'P') {
                         ESTADO = 15;
+
                     } else {
                         ESTADO = diagrama();
                     }
                     break;
                 case 15:
-                    c = lee_car();
-                    if (es_let_hex(c) || es_numero(c)) {
-                        ESTADO = 15;
-                    } else if (c == 'h') {
-                        ESTADO = 16;
-                    } else {
-                        ESTADO = diagrama();
-                    }
-                    break;
-                case 16:
                     LEXEMA = obten_lexema();
                     a_i = a_a;
-                    return ("numhex");
-                case 17:
+                    return ("inst");
+                case 16:
                     c = lee_car();
-                    if (c == ':') {
-                        ESTADO = 18;
+                    if (c == ',') {
+                        ESTADO = 17;
                     } else {
                         ESTADO = diagrama();
                     }
                     break;
+                case 17:
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return ("sep");
                 case 18:
                     c = lee_car();
-                    if (es_letra(c)) {
-                        ESTADO = 19;
-                    } else {
-                        ESTADO = diagrama();
+                    switch (c) {
+                        case 'A':
+                            ESTADO = 19;
+                            break;
+                        case 'B':
+                            ESTADO = 23;
+                            break;
+                        case 'C':
+                            ESTADO = 27;
+                            break;
+                        case 'D':
+                            ESTADO = 31;
+                            break;
+                        case 'I':
+                            ESTADO = 33;
+                            break;
+                        default:
+                            ESTADO = diagrama();
+
                     }
                     break;
-
                 case 19:
                     c = lee_car();
-                    if (es_letra(c) || es_numero(c)) {
-                        ESTADO = 19;
-                    } else {
-                        ESTADO = 20;
+                    switch (c) {
+                        case 'X':
+                            ESTADO = 20;
+                            break;
+                        case 'H':
+                            ESTADO = 21;
+                            break;
+                        case 'L':
+                            ESTADO = 22;
+                            break;
+                        default:
+                            ESTADO = diagrama();
+
                     }
                     break;
                 case 20:
-                    a_a = a_a - 1;
                     LEXEMA = obten_lexema();
                     a_i = a_a;
-                    return ("ll_etq");
+                    return ("reg");
                 case 21:
-                    c = lee_car();
-                    if (c == '(') {
-                        ESTADO = 22;
-                    } else {
-                        ESTADO = diagrama();
-                    }
-                    break;
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return ("reg");
                 case 22:
-                    c = lee_car();
-                    if (es_letra(c)) {
-                        ESTADO = 23;
-                    } else {
-                        ESTADO = diagrama();
-                    }
-                    break;
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return ("reg");
                 case 23:
                     c = lee_car();
-                    if (es_letra(c) || es_numero(c)) {
-                        ESTADO = 23;
-                    } else {
-                        if (c == ')') {
+                    switch (c) {
+                        case 'X':
                             ESTADO = 24;
-                        } else {
+                            break;
+                        case 'H':
+                            ESTADO = 25;
+                            break;
+                        case 'L':
+                            ESTADO = 26;
+                            break;
+                        default:
                             ESTADO = diagrama();
-                        }
+
                     }
                     break;
                 case 24:
                     LEXEMA = obten_lexema();
                     a_i = a_a;
-                    return ("etq_dest");
+                    return ("reg");
                 case 25:
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return ("reg");
+                case 26:
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return ("reg");
+                case 27:
                     c = lee_car();
-                    if (es_delim(c)) {
-                        ESTADO = 26;
+                    switch (c) {
+                        case 'X':
+                            ESTADO = 28;
+                            break;
+                        case 'H':
+                            ESTADO = 29;
+                            break;
+                        case 'L':
+                            ESTADO = 30;
+                            break;
+                        default:
+                            ESTADO = diagrama();
+
+                    }
+                    break;
+                case 28:
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return ("reg");
+                case 29:
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return ("reg");
+                case 30:
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return ("reg");
+
+                case 31:
+                    c = lee_car();
+                    if (c == 'I') {
+                        ESTADO = 32;
+                    } else {
+                        ESTADO = diagrama();
+                    }
+                    break;
+                case 32:
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return ("reg");
+                case 33:
+                    c = lee_car();
+                    if (c == 'P') {
+                        ESTADO = 34;
+                    } else {
+                        ESTADO = diagrama();
+                    }
+                    break;
+                case 34:
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return ("reg");
+                case 35:
+                    c = lee_car();
+                    if (es_let_hex(c) || es_numero(c)) {
+                        ESTADO = 36;
+                    } else {
+                        ESTADO = diagrama();
+                    }
+                    break;
+                case 36:
+                    c = lee_car();
+                    if (es_let_hex(c) || es_numero(c)) {
+                        ESTADO = 36;
+                    } else {
+                        if (c == 'h') {
+                            ESTADO = 37;
+                        } else {
+                            ESTADO = diagrama();
+                        }
+                    }
+                    break;
+                case 37:
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return ("numhex");
+                case 38:
+                    c = lee_car();
+                    if (c == ':') {
+                        ESTADO = 39;
+                    } else {
+                        ESTADO = diagrama();
+                    }
+                    break;
+                case 39:
+                    c = lee_car();
+                    if (es_letra(c)) {
+                        ESTADO = 40;
                     } else {
                         ESTADO = diagrama();
                     }
                     break;
 
-                case 26:
+                case 40:
                     c = lee_car();
-                    if (es_delim(c)) {
-                        ESTADO = 26;
+                    if (es_letra(c) || es_numero(c)) {
+                        ESTADO = 40;
                     } else {
-                        ESTADO = 27;
+                        ESTADO = 41;
                     }
                     break;
-                case 27:
+                case 41:
+                    a_a = a_a - 1;
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return ("ll_etq");
+                case 42:
+                    c = lee_car();
+                    if (c == '(') {
+                        ESTADO = 43;
+                    } else {
+                        ESTADO = diagrama();
+                    }
+                    break;
+                case 43:
+                    c = lee_car();
+                    if (es_letra(c)) {
+                        ESTADO = 44;
+                    } else {
+                        ESTADO = diagrama();
+                    }
+                    break;
+                case 44:
+                    c = lee_car();
+                    if (es_letra(c) || es_numero(c)) {
+                        ESTADO = 44;
+                    } else {
+                        if (c == ')') {
+                            ESTADO = 45;
+                        } else {
+                            ESTADO = diagrama();
+                        }
+                    }
+                    break;
+                case 45:
+                    LEXEMA = obten_lexema();
+                    a_i = a_a;
+                    return ("etq_dest");
+                case 46:
+                    c = lee_car();
+                    if (es_delim(c)) {
+                        ESTADO = 47;
+                    } else {
+                        ESTADO = diagrama();
+                    }
+                    break;
+
+                case 47:
+                    c = lee_car();
+                    if (es_delim(c)) {
+                        ESTADO = 47;
+                    } else {
+                        ESTADO = 48;
+                    }
+                    break;
+                case 48:
                     a_a = a_a - 1;
                     LEXEMA = obten_lexema();
                     a_i = a_a;
                     return ("nosirve");
-
-                case 28:
+                case 49:
                     c = lee_car();
                     if (c == 255) {
-                        ESTADO = 29;
+                        ESTADO = 50;
                     } else {
                         ESTADO = diagrama();
                     }
                     break;
-                case 29:
+                case 50:
                     LEXEMA = obten_lexema();
                     a_i = a_a;
                     return ("nosirve");
@@ -388,6 +518,9 @@ public class Analizador2 {
         }
     }
 
+    /**
+     * @param args the command line arguments
+     */
     public static char[] abreLeeCierra(String xName) {
         File xFile = new File(xName);
         char[] data;
@@ -406,18 +539,6 @@ public class Analizador2 {
         return null;
     }
 
-    public static boolean creaEscribeArchivo(File xFile, String mensaje) {
-        try {
-            PrintWriter fileOut = new PrintWriter(new FileWriter(xFile, true));
-            fileOut.println(mensaje);
-            fileOut.close();
-            return true;
-
-        } catch (IOException ex) {
-            return false;
-        }
-    }
-
     public static void main(String argumento[]) {
 
         try {
@@ -430,20 +551,14 @@ public class Analizador2 {
             System.out.println("El archivo [" + Entrada + "] no existe");
             System.exit(4);
         }
-        Salida = argumento[0] + ".sal";
 
         linea = abreLeeCierra(Entrada);
         while (!fin_archivo) {
             ESTADO = 0;
             COMIENZO = 0;
             MiToken = TOKEN();
-            System.out.println(ContRen);
-            if (!MiToken.equals("nosirve")) {
-                creaEscribeArchivo(xArchivo(Salida), MiToken);
-                creaEscribeArchivo(xArchivo(Salida), LEXEMA);
-                creaEscribeArchivo(xArchivo(Salida), ContRen + "");
-            }
-
+            System.out.println("Encontre token [" + MiToken + "} con lexema[" + LEXEMA + "]");
+            pausa();
         }
         System.out.println("Analisis lexicografico existoso");
     }

@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
-public class LenguajeA {
+public class DiagLA {
 
     public static int filesize = 0;
     public static char[] linea;

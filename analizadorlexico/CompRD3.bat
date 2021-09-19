@@ -1,15 +1,21 @@
 ECHO off
 cls
 del %1.LA1
-java LenguajeA.java %1
+
+java DiagLA.java %1
 IF ERRORLEVEL 1 GOTO fallo
+
 echo Analisis lexicografico terminado
+
 java RecDesc3.java %1
 IF ERRORLEVEL 1 GOTO fallo
+
 echo Analisis lexicografico terminado
 echo No se hallaron errores en la compilacion
 goto :salir
+
 :fallo
-echo ERRORES EN LA COMPILACION!
+    echo ERRORES EN LA COMPILACION!
+
 :salir
-echo COMPILACION TERMINADA
+    echo COMPILACION TERMINADA
