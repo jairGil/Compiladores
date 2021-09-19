@@ -132,8 +132,6 @@ public class RecDescLA {
         sig_cabeza(xArchivo(Entrada));
         EXP();
 
-        System.out.println("Hola" + CABEZA);
-
         if (!CABEZA.equals("eof"))
             rut_error();
 
