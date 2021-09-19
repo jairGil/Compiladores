@@ -383,6 +383,7 @@ public class DiagLA {
             System.out.println("El archivo [" + Entrada + "] no existe");
             System.exit(4);
         }
+
         Salida = argumento[0] + ".LA1";
 
         linea = abreLeeCierra(Entrada);
@@ -400,7 +401,7 @@ public class DiagLA {
         }
         creaEscribeArchivo(xArchivo(Salida), "eof");
         creaEscribeArchivo(xArchivo(Salida), "eof");
-        creaEscribeArchivo(xArchivo(Salida), "53");
+        creaEscribeArchivo(xArchivo(Salida), "" + (ContRen + 1));
         System.out.println("");
 
     }

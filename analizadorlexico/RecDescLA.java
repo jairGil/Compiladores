@@ -16,6 +16,7 @@ public class RecDescLA {
         try {
             FileReader fr = new FileReader(xFile);
             BufferedReader br = new BufferedReader(fr);
+            br.skip(Posicion);
 
             String linea = br.readLine();
             Posicion = Posicion + linea.length() + 2;
@@ -27,7 +28,7 @@ public class RecDescLA {
             Posicion = Posicion + linea.length() + 2;
             RENGLON = linea;
             fr.close();
-            System.out.println(".");
+
         } catch (IOException e) {
             System.out.println("Error");
         }
@@ -53,6 +54,7 @@ public class RecDescLA {
     public static void rut_error() {
         System.out.println("\nERROR: Error sintactico en el renglon " + RENGLON + ", token [" + CABEZA + "]"
                 + ", lexema [" + LEXEMA + "]");
+
         System.exit(4);
     }
 
@@ -74,21 +76,16 @@ public class RecDescLA {
     }
 
     public static void ELEM() {
-        switch (CABEZA) {
-            case "num":
-                asocia("num");
-                break;
-            case "id":
-                asocia("id");
-                break;
-            case "pa":
-                asocia("pa");
-                EXP();
-                asocia("pc");
-                break;
-            default:
-                rut_error();
-                break;
+        if (CABEZA.equals("num")) {
+            asocia("num");
+        } else if (CABEZA.equals("id")) {
+            asocia("id");
+        } else if (CABEZA.equals("pa")) {
+            asocia("pa");
+            EXP();
+            asocia("pc");
+        } else {
+            rut_error();
         }
 
     }
@@ -98,7 +95,6 @@ public class RecDescLA {
             OP();
             EXP();
         }
-
     }
 
     public static void OP() {
@@ -135,6 +131,9 @@ public class RecDescLA {
 
         sig_cabeza(xArchivo(Entrada));
         EXP();
+
+        System.out.println("Hola" + CABEZA);
+
         if (!CABEZA.equals("eof"))
             rut_error();
 

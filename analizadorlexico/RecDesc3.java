@@ -15,6 +15,7 @@ public class RecDesc3 {
         try {
             FileReader fr = new FileReader(xFile);
             BufferedReader br = new BufferedReader(fr);
+            br.skip(Posicion);
 
             String linea = br.readLine();
             Posicion = Posicion + linea.length() + 2;
@@ -26,7 +27,6 @@ public class RecDesc3 {
             Posicion = Posicion + linea.length() + 2;
             RENGLON = linea;
             fr.close();
-            System.out.println(".");
         } catch (IOException e) {
             System.out.println("Error");
         }
