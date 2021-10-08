@@ -139,7 +139,6 @@ public class ParseLL1 {
 
             if (a.equals("eof") && X.equals("eof")) {
                 System.out.println("Compilacion exitosa");
-                break;
             } else {
                 if (terminal(X) >= 0) {
                     if (X.equals(a)) {
