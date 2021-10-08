@@ -131,7 +131,7 @@ public class ParseLL1 {
         print_pila();
         // pausa();
         lee_token(xArchivo(Entrada));
-        while (true) {
+        do {
             X = pop();
 
             System.out.println("X=[" + X + "] a=[" + a + "]");
@@ -167,7 +167,7 @@ public class ParseLL1 {
                 }
             }
             System.out.println();
-        }
+        } while (!X.equals("eof"));
         System.out.println("Termino el parse LL1");
 
     }
