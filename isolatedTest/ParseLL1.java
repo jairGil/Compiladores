@@ -11,8 +11,11 @@ public class ParseLL1 {
     static String a, LEXEMA, RENGLON, Entrada, X;
     static String nt[] = { "LISTA", "LISTA_P", "ELEM" };
     static String t[] = { "+", "-", "*", "/", "num", "id", "pa", "pc", "eof" };
-    static String pd[] = { "ELEM LISTA_P", "+ LISTA", "- LISTA", "* LISTA", "/ LISTA", "epsilon", "num", "id",
+
+    // IMPORTANTE: Primer string vacía
+    static String pd[] = { "", "ELEM LISTA_P", "+ LISTA", "- LISTA", "* LISTA", "/ LISTA", "epsilon", "num", "id",
             "pa LISTA pc" };
+
     static int m[][] = { { 0, 0, 0, 0, 1, 1, 1, 0, 0 }, { 2, 3, 4, 5, 0, 0, 0, 6, 6 }, { 0, 0, 0, 0, 7, 8, 9, 0, 0 } };
     static String pila[] = new String[10000];
     static int tope = -1;
@@ -32,7 +35,6 @@ public class ParseLL1 {
             Posicion = Posicion + linea.length() + 2;
             RENGLON = linea;
             fr.close();
-            System.out.println(".");
         } catch (IOException e) {
             System.out.println("Error");
         }
@@ -92,9 +94,14 @@ public class ParseLL1 {
     }
 
     public static void print_pila() {
-        System.out.println("PILA ==>");
+        System.out.print("PILA ==> [ ");
         for (int i = 0; i <= tope; i++) {
-            System.out.println(pila[i] + " ");
+            if (i != tope) {
+                System.out.print(pila[i] + ", ");
+            } else {
+                System.out.print(pila[i] + " ]");
+
+            }
         }
         System.out.println("");
     }
@@ -122,39 +129,46 @@ public class ParseLL1 {
         push("eof");
         push("LISTA");
         print_pila();
-        pausa();
+        // pausa();
         lee_token(xArchivo(Entrada));
-        do {
+        while (true) {
             X = pop();
+
+            System.out.println("X=[" + X + "] a=[" + a + "]");
+            // pausa();
 
             if (a.equals("eof") && X.equals("eof")) {
                 System.out.println("Compilacion exitosa");
+                break;
             } else {
                 if (terminal(X) >= 0) {
                     if (X.equals(a)) {
-                        System.out.println("\tPop y leer siguiente");
+                        // System.out.println("\tPop y leer siguiente");
                         print_pila();
-                        pausa();
+                        // pausa();
                         lee_token(xArchivo(Entrada));
                     } else {
                         rut_error();
                     }
                 } else {
                     if (m[no_terminal(X)][terminal(a)] != 0) {
-                        System.out.println("\tProduccion=" + m[no_terminal(X)][terminal(a)]);
-                        pausa();
+                        System.out.println("Produccion=" + m[no_terminal(X)][terminal(a)]);
+                        // pausa();
+
                         String[] Y = pd[m[no_terminal(X)][terminal(a)]].split(" ");
                         for (int i = Y.length - 1; i >= 0; i--) {
                             push(Y[i]);
                         }
+                        System.out.println("]");
                         print_pila();
-                        pausa();
+                        // pausa();
                     } else {
                         rut_error();
                     }
                 }
             }
-        } while (!X.equals("eof"));
+            System.out.println();
+        }
         System.out.println("Termino el parse LL1");
 
     }
