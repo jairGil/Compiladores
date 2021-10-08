@@ -107,10 +107,11 @@ public class ParseLL1 {
             if (i != tope) {
                 System.out.print(pila[i] + ", ");
             } else {
-                System.out.print(pila[i] + " ]");
+                System.out.print(pila[i] + " ");
 
             }
         }
+        System.out.print("]");
         System.out.println("");
     }
 
