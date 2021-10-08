@@ -159,7 +159,6 @@ public class ParseLL1 {
                         for (int i = Y.length - 1; i >= 0; i--) {
                             push(Y[i]);
                         }
-                        System.out.println("]");
                         print_pila();
                         // pausa();
                     } else {
