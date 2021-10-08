@@ -153,7 +153,7 @@ public class ParseLL1 {
                 if (es_terminal(X)) {
                     if (X.equals(a)) {
                         lee_token(xArchivo(Entrada));
-                        System.out.println("\tPop y leer siguiente");
+                        System.out.println("Pop y leer siguiente");
                     } else {
                         rut_error();
                     }
