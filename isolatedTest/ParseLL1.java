@@ -159,7 +159,11 @@ public class ParseLL1 {
                     }
                 } else {
                     if (m[no_terminal(X)][terminal(a)] != null) {
-                        System.out.println("Produccion = " + (m[no_terminal(X)][terminal(a)] + 1));
+                        System.out.println("Los elementos de la produccion " + (m[no_terminal(X)][terminal(a)] + 1)
+                                + " se agregan de manera inversa a la pila");
+
+                        System.out.println("Produccion " + (m[no_terminal(X)][terminal(a)] + 1) + " = "
+                                + pd[m[no_terminal(X)][terminal(a)]]);
 
                         String[] Y = pd[m[no_terminal(X)][terminal(a)]].split(" ");
 
